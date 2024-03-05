@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ChildProfileResource;
-use App\Models\Child_profile;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 
-class Child_profileController extends Controller
+class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //return UserResource::collection(User::with('family_accounts')->get());
-        return ChildProfileResource::collection(Child_profile::with('attendances')->get());
+        return Attendance::all();
     }
 
     /**
@@ -31,8 +29,7 @@ class Child_profileController extends Controller
      */
     public function show(string $id)
     {
-        //return new UserResource(User::with('family_accounts')->findOrFail($id));
-        return new ChildProfileResource(Child_profile::with('attendances')->findOrFail($id));
+        return Attendance::findOrFail($id);
     }
 
     /**

@@ -14,4 +14,9 @@ class Child_profile extends Model
     {
         return $this->belongsTo(Family_account::class);
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 
 use App\Models\Child_profile;
+use App\Models\Attendance;
 
 use Illuminate\Database\Seeder;
 use Database\Factories\ChildProfileFactory;
@@ -29,7 +30,8 @@ class DatabaseSeeder extends Seeder
         // чтобы запускался и  UserSeeder,
 
         //ChildProfileFactory::factory(8)->create();
-        ChildProfileFactory::new()->count(8)->create();
+        // ChildProfileFactory::new()->count(8)->create();
+        Attendance::factory(15)->create();
 
     }
 }

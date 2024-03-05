@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
+    AttendanceController,
     Child_profileController,
     Family_accountController,
     LoginController,
@@ -41,4 +42,5 @@ Route::apiResources([
     'users' => UserController::class,
     'family_accounts'=>Family_accountController::class,
     'child_profiles' =>Child_profileController::class,
+    'attendances' => AttendanceController::class,
 ]);
