@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AttendanceResource;
-use App\Models\Attendance;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-class AttendanceController extends Controller
+class Trusted_personController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Attendance::all();
+        //
     }
 
     /**
@@ -23,8 +20,7 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $created_attendance = Attendance::create($request->all());
-        return new AttendanceResource($created_attendance);
+        //
     }
 
     /**
@@ -32,7 +28,7 @@ class AttendanceController extends Controller
      */
     public function show(string $id)
     {
-        return Attendance::findOrFail($id);
+        //
     }
 
     /**
@@ -46,12 +42,8 @@ class AttendanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attendance $attendance)
+    public function destroy(string $id)
     {
         //
-        $attendance->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
     }
-
-    
 }

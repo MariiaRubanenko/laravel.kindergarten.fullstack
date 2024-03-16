@@ -20,9 +20,12 @@ class ChildProfileResource extends JsonResource
             'birthday'=>$this->birthday,
             'allergies'=>$this->allergies,
             'illnesses'=>$this->illnesses,
-            //'family_accounts'=>UserFamilyAccountResource::collection($this->family_accounts),
+            //'image_data'=>$this->image_data,
+            'image_data' => base64_encode($this->image_data), // изменение для отображения изображения
             'attendances'=>ChildProfileAttendanceResource::collection($this->attendances),
         ];
+        
+
     }
 }
 

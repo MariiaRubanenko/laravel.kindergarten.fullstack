@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AttendanceResource;
-use App\Models\Attendance;
+use App\Http\Resources\StaffResource;
 use Illuminate\Http\Request;
+use App\Models\Staff;
+use App\Http\Requests\StaffRequest;
 use Illuminate\Http\Response;
 
-class AttendanceController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Attendance::all();
+        //return GroupResource::collection(Group::all());
+        return StaffResource::collection(Staff::all());
     }
 
     /**
@@ -23,35 +25,40 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $created_attendance = Attendance::create($request->all());
-        return new AttendanceResource($created_attendance);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Staff $staff)
     {
-        return Attendance::findOrFail($id);
+        //
+        return new StaffResource($staff);
     }
 
     /**
      * Update the specified resource in storage.
+     * 
+     * 
      */
-    public function update(Request $request, string $id)
+
+    public function update(StaffRequest $request, Staff $staff)
     {
         //
+        $staff->update($request->validated());
+
+        return new StaffResource($staff);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attendance $attendance)
+    public function destroy(Staff $staff)
     {
         //
-        $attendance->delete();
+        $staff->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
-    
 }

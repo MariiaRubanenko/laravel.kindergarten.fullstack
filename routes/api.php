@@ -7,9 +7,12 @@ use App\Http\Controllers\Api\{
     AttendanceController,
     Child_profileController,
     Family_accountController,
+    GroupController,
     LoginController,
     RegisterController,
-    UserController
+    StaffController,
+    UserController,
+
 };
 use App\Http\Resources\UserResource;
 // use App\Http\Controllers\Api\{
@@ -43,4 +46,12 @@ Route::apiResources([
     'family_accounts'=>Family_accountController::class,
     'child_profiles' =>Child_profileController::class,
     'attendances' => AttendanceController::class,
+    'groups'=> GroupController::class,
+    'staffs' => StaffController::class,
 ]);
+
+
+
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    Route::get('/test',[UserController::class, 'index'] );
+});

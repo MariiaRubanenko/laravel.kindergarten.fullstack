@@ -21,4 +21,9 @@ class Family_account extends Model
     {
         return $this->hasMany(Child_profile::class);
     }
+
+    public function trusted_persons(){
+
+        return $this->hasMany(Trusted_person::class);
+    }
 }
