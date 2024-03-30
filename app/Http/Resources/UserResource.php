@@ -37,7 +37,7 @@ class UserResource extends JsonResource
                     'permissions' => $role->permissions->pluck('name') ?? [],
                 ];
             }),
-            'family_accounts'=>UserFamilyAccountResource::collection($this->family_accounts),
+            // 'family_accounts'=>UserFamilyAccountResource::collection($this->family_accounts),
         ];
         
     }

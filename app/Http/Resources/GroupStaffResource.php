@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FamilyAccountChildProfileResource extends JsonResource
+class GroupStaffResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,10 @@ class FamilyAccountChildProfileResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return[
             'id'=>$this->id,
-            'name' => $this->name,
-            // 'gender'=> $this->gender,
-            // 'birthday'=>$this->birthday,
-            // 'allergies'=>$this->allergies,
-            // 'illnesses'=>$this->illnesses,
+            'name' => $this->user->name,
+            
         ];
     }
 }

@@ -6,7 +6,8 @@ namespace Database\Seeders;
 
 
 use App\Models\Child_profile;
-
+use App\Models\Attendance;
+use Database\Seeders\DaySeeder;
 use Illuminate\Database\Seeder;
 use Database\Factories\ChildProfileFactory;
 
@@ -24,12 +25,21 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // $this->call(UserSeeder::class);
+
+
+        //Сидеры 
         //Позволяет одним действием заполнить базу данных необходимыми данными при каждом запуске сида,
         // чтобы запускался и  UserSeeder,
+        // $this->call(UserSeeder::class);
 
+        //  $this->call(DaysSeeder::class);
+        
+        //Фабрики
         //ChildProfileFactory::factory(8)->create();
-        ChildProfileFactory::new()->count(8)->create();
+        // ChildProfileFactory::new()->count(8)->create();
+        // Attendance::factory(15)->create();
 
+
+        
     }
 }

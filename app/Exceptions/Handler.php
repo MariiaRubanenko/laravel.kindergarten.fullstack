@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Database\QueryException;
 
 class Handler extends ExceptionHandler
 {
@@ -27,4 +28,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+//     public function render($request, Throwable $e)
+// {
+//     if ($e instanceof QueryException && $e->errorInfo[1] === 1062) {
+//         return response()->json(['error' => 'A lesson with the same day, action, and group already exists.'], 400);
+//     }
+
+//     return parent::render($request, $e);
+// }
+    
 }

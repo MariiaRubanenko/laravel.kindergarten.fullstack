@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FamilyAccountChildProfileResource extends JsonResource
+class AttendanceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,13 @@ class FamilyAccountChildProfileResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'name' => $this->name,
-            // 'gender'=> $this->gender,
-            // 'birthday'=>$this->birthday,
-            // 'allergies'=>$this->allergies,
-            // 'illnesses'=>$this->illnesses,
+            'child_profile_id' =>$this->child_profile_id,
+            'name' => $this->child_profile->name,
+            'date'=>$this->date,
+            'reason'=>$this->reason,
+           
+           
         ];
+         
     }
 }

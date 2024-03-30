@@ -11,6 +11,7 @@ use App\Http\Resources\UserResource;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use App\Models\Family_account;
+use App\Models\Staff;
 
 
 
@@ -33,12 +34,15 @@ class RegisterController extends Controller
             $user->assignRole($role); 
         }
 
-        // Проверяем, если роль пользователя - "parent"
          if ($roleName === 'parent') {
 
-        // Создаем запись в таблице family_accounts
         $this->createFamilyAccount($user);
+        
+        } else if ($roleName === 'teacher') {
+            // Создаем запись в таблице staffs
+            $this->createStaffAccount($user);
         }
+        
         
 
         return new UserResource($user);
@@ -49,7 +53,10 @@ class RegisterController extends Controller
         Family_account::create(['user_id' => $user->id]);
     }
 
-
+    protected function createStaffAccount($user)
+    {
+        Staff::create(['user_id' => $user->id]);
+    }
 
 
 }

@@ -3,22 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use App\Http\Resources\DayResource;
 use Illuminate\Http\Response;
-use App\Models\User;
-use App\Models\Family_account;
-use App\Models\Child_profile;
-use App\Models\Trusted_person;
+use App\Models\Day;
 
-class UserController extends Controller
+class DayController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return UserResource::collection(User::with('family_accounts')->get());
+        // return Day::all();
+        return DayResource::collection(Day::all());
+        // return DayResource::collection(Day::with('lessons')->get());
     }
 
     /**
@@ -32,9 +31,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Day $day)
     {
-        return new UserResource(User::with('family_accounts')->findOrFail($id));
+       
+        return new DayResource($day);
     }
 
     /**
@@ -48,22 +48,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Day $day)
     {
-        // 
-
-
-        foreach ($user->family_accounts as $familyAccount) {
-            $familyAccount->child_profiles()->delete();
-        }
- 
-        foreach ($user->family_accounts as $familyAccount) {
-            $familyAccount->trusted_persons()->delete();
-        }
-
-
-        $user->delete();
-
+        $day->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }

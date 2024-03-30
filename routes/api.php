@@ -4,11 +4,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
+    ActionController,
+    AttendanceController,
     Child_profileController,
+    DayController,
     Family_accountController,
+    GroupController,
+    LessonController,
     LoginController,
     RegisterController,
-    UserController
+    StaffController,
+    Trusted_personController,
+    UserController,
+
 };
 use App\Http\Resources\UserResource;
 // use App\Http\Controllers\Api\{
@@ -41,4 +49,17 @@ Route::apiResources([
     'users' => UserController::class,
     'family_accounts'=>Family_accountController::class,
     'child_profiles' =>Child_profileController::class,
+    'attendances' => AttendanceController::class,
+    'groups'=> GroupController::class,
+    'staffs' => StaffController::class,
+    'trusted_persons'=> Trusted_personController::class,
+    'days'=> DayController::class,
+    'actions'=> ActionController::class,
+    'lessons'=> LessonController::class,
 ]);
+
+
+
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    Route::get('/test',[UserController::class, 'index'] );
+});

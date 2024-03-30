@@ -16,8 +16,12 @@ class FamilyAccountResource extends JsonResource
     {
         return [
             'family_account_id' => $this->id,
+            'user_id'=> $this->user_id,
+            'name' => $this->user->name,
+            'email' => $this->user->email,
             'child_profiles'=> FamilyAccountChildProfileResource::collection($this->child_profiles),
             // 'family_accounts'=>UserFamilyAccountResource::collection($this->family_accounts),
+            'trusted_persons'=>TrustedPersonResource::collection($this->trusted_persons),
         ];
     }
 }

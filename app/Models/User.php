@@ -55,4 +55,8 @@ class User extends Authenticatable
         return $this->hasMany(Family_account::class);
     }
 
+    public function staffs()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }
