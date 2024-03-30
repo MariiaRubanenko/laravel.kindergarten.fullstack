@@ -14,4 +14,15 @@ class Group extends Model
     {
         return $this->hasMany(Staff::class);
     }
+
+    public function child_profiles()
+    {
+
+        return $this->hasMany(Child_profile::class);
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }

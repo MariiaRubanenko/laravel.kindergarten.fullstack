@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\Helper;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class ChildProfileRequest extends FormRequest
 {
@@ -29,6 +32,13 @@ class ChildProfileRequest extends FormRequest
             'illnesses' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'family_account_id' => 'required|exists:family_accounts,id',
+            'group_id'=>'required|exists:groups,id',
         ];
+    }
+
+    public function failedValidation(Validator $validator){
+
+        // send error message
+        Helper::sendError('validation error', $validator->errors());
     }
 }

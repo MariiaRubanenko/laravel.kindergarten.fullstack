@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\Helper;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class StaffRequest extends FormRequest
 {
@@ -23,12 +26,20 @@ class StaffRequest extends FormRequest
     {
         return [
             
-        'image_name' => 'nullable|string|max:255',
-        'image_data' => 'nullable',
+        // 'image_name' => 'nullable|string|max:255',
+        // 'image_data' => 'nullable',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         'user_id' => 'required|exists:users,id',
         'group_id' => 'nullable|exists:groups,id',
-        'phone_number' => 'nullable|string|max:255',
+        // 'phone_number' => 'nullable|string|max:255',
+        'phone_number' => ['required', 'string', 'max:255', 'regex:/^\+380\d{9}$/'],
 
         ];
+    }
+
+    public function failedValidation(Validator $validator){
+
+        // send error message
+        Helper::sendError('validation error', $validator->errors());
     }
 }

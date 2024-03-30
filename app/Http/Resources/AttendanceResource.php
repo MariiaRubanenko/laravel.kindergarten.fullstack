@@ -15,8 +15,14 @@ class AttendanceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
+            'child_profile_id' =>$this->child_profile_id,
+            'name' => $this->child_profile->name,
             'date'=>$this->date,
             'reason'=>$this->reason,
+           
+           
         ];
+         
     }
 }

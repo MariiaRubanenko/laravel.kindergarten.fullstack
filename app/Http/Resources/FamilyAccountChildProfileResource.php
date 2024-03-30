@@ -15,11 +15,12 @@ class FamilyAccountChildProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'name' => $this->name,
-            'gender'=> $this->gender,
-            'birthday'=>$this->birthday,
-            'allergies'=>$this->allergies,
-            'illnesses'=>$this->illnesses,
+            // 'gender'=> $this->gender,
+            // 'birthday'=>$this->birthday,
+            // 'allergies'=>$this->allergies,
+            // 'illnesses'=>$this->illnesses,
         ];
     }
 }

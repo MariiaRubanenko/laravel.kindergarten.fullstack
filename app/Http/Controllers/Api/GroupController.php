@@ -16,7 +16,7 @@ class GroupController extends Controller
     public function index()
     {
         //return UserResource::collection(User::with('family_accounts')->get());
-       // return GroupResource::collection(Group::with('staffs')->get());
+       // return GroupResource::collection(Group::with('staffs')->get()); 
        return GroupResource::collection(Group::all());
     }
 
@@ -33,7 +33,7 @@ class GroupController extends Controller
 
     return new GroupResource($created_group);
 }
-
+ 
 
     /**
      * Display the specified resource.
@@ -67,9 +67,17 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        
+        // foreach ($group->lessons as $lesson) {
+        //     $lesson->lessons()->delete();
+        // }
+        // $group->delete();
+        // return response(null, Response::HTTP_NO_CONTENT);
+        $group->lessons()->delete(); 
 
+        // Удаление группы после удаления уроков
         $group->delete();
+    
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }

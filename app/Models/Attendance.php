@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
-    protected $fillable =['date','reason' ];
+    protected $table = "attendances";
+    protected $fillable =['date','reason', 'child_profile_id'];
 
     public function child_profile()
     {

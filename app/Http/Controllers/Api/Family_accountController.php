@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\FamilyAccountResource;
 use App\Models\Family_account;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class Family_accountController extends Controller
 {
@@ -46,8 +47,10 @@ class Family_accountController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Family_account $family_account)
     {
         //
+        $family_account->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

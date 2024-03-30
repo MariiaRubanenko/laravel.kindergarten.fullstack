@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Http\Requests\StaffRequest;
 use Illuminate\Http\Response;
+use App\Http\Helpers\Helper;
 
 class StaffController extends Controller
 {
@@ -46,10 +47,19 @@ class StaffController extends Controller
     public function update(StaffRequest $request, Staff $staff)
     {
         //
+
+
+        $data = $request->validated();
+        try{
+
+            Helper::processImage($request, $data);
+
         $staff->update($request->validated());
 
         return new StaffResource($staff);
-
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 400);
+    }
     }
 
     /**
@@ -57,8 +67,8 @@ class StaffController extends Controller
      */
     public function destroy(Staff $staff)
     {
-        //
+        // 
         $staff->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
-}
+} 

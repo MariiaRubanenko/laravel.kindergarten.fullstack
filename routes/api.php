@@ -4,13 +4,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{
+    ActionController,
     AttendanceController,
     Child_profileController,
+    DayController,
     Family_accountController,
     GroupController,
+    LessonController,
     LoginController,
     RegisterController,
     StaffController,
+    Trusted_personController,
     UserController,
 
 };
@@ -48,6 +52,10 @@ Route::apiResources([
     'attendances' => AttendanceController::class,
     'groups'=> GroupController::class,
     'staffs' => StaffController::class,
+    'trusted_persons'=> Trusted_personController::class,
+    'days'=> DayController::class,
+    'actions'=> ActionController::class,
+    'lessons'=> LessonController::class,
 ]);
 
 

@@ -23,6 +23,7 @@ return new class extends Migration
             ->onDelete('set null')
             ->onUpdate('cascade');
             $table->timestamps();
+            
         });
     }
 
