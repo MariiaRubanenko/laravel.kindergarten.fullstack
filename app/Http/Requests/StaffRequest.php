@@ -32,7 +32,7 @@ class StaffRequest extends FormRequest
         'user_id' => 'required|exists:users,id',
         'group_id' => 'nullable|exists:groups,id',
         // 'phone_number' => 'nullable|string|max:255',
-        'phone_number' => ['required', 'string', 'max:255', 'regex:/^\+380\d{9}$/'],
+        'phone_number' => ['nullable', 'string', 'max:255', 'regex:/^\+380\d{9}$/'],
 
         ];
     }

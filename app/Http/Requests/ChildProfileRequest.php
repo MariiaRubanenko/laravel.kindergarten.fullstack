@@ -32,7 +32,8 @@ class ChildProfileRequest extends FormRequest
             'illnesses' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'family_account_id' => 'required|exists:family_accounts,id',
-            'group_id'=>'required|exists:groups,id',
+            // 'group_id'=>'required|exists:groups,id',
+            'group_id' => 'nullable|exists:groups,id',
         ];
     }
 

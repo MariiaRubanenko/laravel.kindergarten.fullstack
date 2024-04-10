@@ -17,7 +17,7 @@ class ActionResource extends JsonResource
         return [
 
             'id'=>$this->id,
-            'day_of_week'=>$this->name,
+            'name'=>$this->name,
         ];
     }
 }

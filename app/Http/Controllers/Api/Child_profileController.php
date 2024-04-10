@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChildProfileRequest;
 use App\Http\Resources\ChildProfileResource;
+use App\Http\Resources\FamilyAccountChildProfileResource;
 use App\Models\Child_profile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,7 +22,18 @@ class Child_profileController extends Controller
         
     }
 
-    
+    public function childrenWithoutGroup(Request $request)
+    {
+        $children = Child_profile::whereNull('group_id')->get();
+
+        // return response()->json($children);
+        return FamilyAccountChildProfileResource::collection($children);
+    }
+
+
+
+
+
     public function store(ChildProfileRequest $request)
 {
     $data = $request->validated();

@@ -30,7 +30,8 @@ class UserResource extends JsonResource
             'user_id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'token' => $this->createToken("Token")->plainTextToken,
+            // 'token' => $this->createToken("Token")->plainTextToken,
+            // 'token' => $this->when($this->token, $this->token),
             'roles' => $this->roles->map(function($role) {
                 return [
                     'name' => $role->name,
@@ -41,6 +42,12 @@ class UserResource extends JsonResource
         ];
         
     }
+    // public function with($request)
+    // {
+    //     return [
+    //         'token' => $this->token,
+    //     ];
+    // }
 }
 
 /*

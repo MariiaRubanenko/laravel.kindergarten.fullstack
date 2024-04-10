@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StaffResource;
+use App\Http\Resources\GroupStaffResource;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Http\Requests\StaffRequest;
@@ -37,6 +38,16 @@ class StaffController extends Controller
         //
         return new StaffResource($staff);
     }
+
+
+    public function staffsWithoutGroup(Request $request)
+    {
+        $staffs = Staff::whereNull('group_id')->get();
+
+        // return response()->json($children);
+        return GroupStaffResource::collection($staffs);
+    }
+
 
     /**
      * Update the specified resource in storage.

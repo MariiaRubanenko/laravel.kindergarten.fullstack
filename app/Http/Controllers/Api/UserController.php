@@ -10,6 +10,9 @@ use App\Models\User;
 use App\Models\Family_account;
 use App\Models\Child_profile;
 use App\Models\Trusted_person;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -44,6 +47,44 @@ class UserController extends Controller
     {
         //
     }
+
+
+   
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+    
+        $user = Auth::user();
+    
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['error' => 'The old password is incorrect'], 401);
+        }
+    
+        $request->user()->fill(['password' => Hash::make($request->new_password)])->save();
+
+    
+        return response()->json(['message' => 'Password changed successfully']);
+    }
+    
+
+
+
+// public function update(Request $request)
+//     {
+//         $attributes = $request->validate([
+//             'name' => ['string'],
+//             'email' => ['string', 'email', Rule::unique('users')->ignore($request->user())],
+//             'password' => ['confirmed', Password::defaults()],
+//         ]);
+
+//         $request->user()->fill($attributes)->save();
+
+//         return response()->noContent();
+//     }
+
 
     /**
      * Remove the specified resource from storage.

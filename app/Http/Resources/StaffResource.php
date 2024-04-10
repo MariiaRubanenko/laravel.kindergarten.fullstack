@@ -21,6 +21,8 @@ class StaffResource extends JsonResource
             'email' => $this->user->email,
             'image_data' => base64_encode($this->image_data), 
             'phone'=>$this->phone_number,
+            'group_id'=>$this->group_id,
+            'group_name' => $this->group ? $this->group->name : null,
         ];
     }
 }

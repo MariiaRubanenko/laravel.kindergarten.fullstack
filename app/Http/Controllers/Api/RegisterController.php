@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Helpers\Helper;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Response;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use App\Models\Family_account;
@@ -43,9 +44,10 @@ class RegisterController extends Controller
             $this->createStaffAccount($user);
         }
         
-        
+        // Auth::login($user);
 
-        return new UserResource($user);
+        // return new UserResource($user);
+        return response($user, Response::HTTP_CREATED);
     }
 
     protected function createFamilyAccount($user)

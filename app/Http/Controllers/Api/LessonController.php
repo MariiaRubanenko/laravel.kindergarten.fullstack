@@ -7,6 +7,7 @@ use App\Http\Requests\LessonRequest;
 use App\Models\Lesson;
 use App\Http\Helpers\Helper;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Resources\LessonResource;
 use Illuminate\Database\QueryException;
@@ -78,6 +79,26 @@ class LessonController extends Controller
     return new LessonResource($lesson);
     }
 
+
+
+    public function indexByGroupAndDay( Request $request,int $group_id, int $day_id)
+    {
+        $lessons = Lesson::where('group_id', $group_id)
+            ->where('day_id', $day_id)
+            ->get();
+
+        // return response()->json(['lessons' => $lessons], 200);
+        return LessonResource::collection($lessons);
+    }
+
+
+
+
+
+
+
+
+
     /**
      * Update the specified resource in storage.
      */
@@ -101,6 +122,12 @@ class LessonController extends Controller
     }
 
     }
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.

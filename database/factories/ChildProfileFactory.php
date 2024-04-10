@@ -24,7 +24,7 @@ class ChildProfileFactory extends Factory
             'name' => $this->faker->firstName,
             'gender' => $this->faker->randomElement(['male', 'female']),
             'birthday' => $this->faker->date(),
-            'allergies' => $this->faker->text,
+            'allergies' => $this->faker->text, 
             'illnesses' => $this->faker->text,
             'family_account_id'=>$this->faker->numberBetween(1,3)
             //

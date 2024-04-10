@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendanceRequest;
 use App\Http\Resources\AttendanceResource;
 use App\Models\Attendance;
+use App\Models\Child_profile;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -57,6 +59,32 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
     return new AttendanceResource($attendance);
     }
+
+    public function absentChildrenByGroupAndDate($group_id, $date)
+{
+
+    // Получаем список детей, отсутствующих в указанную дату для указанной группы
+    $absentChildren = Attendance::where('date', $date)
+        ->whereHas('child_profile', function ($query) use ($group_id) {
+            $query->where('group_id', $group_id);
+        })
+        ->with('child_profile') // Загружаем связанную модель ChildProfile
+        ->get();
+
+    // Формируем массив с именами детей и причинами отсутствия
+    $absentChildrenData = $absentChildren->map(function ($attendance) {
+        return [
+            'name' => $attendance->child_profile->name,
+            'reason' => $attendance->reason,
+        ];
+    });
+
+    return response()->json($absentChildrenData);
+
+}
+
+
+
 
     /**
      * Update the specified resource in storage.
