@@ -7,9 +7,13 @@ use App\Http\Resources\StaffResource;
 use App\Http\Resources\GroupStaffResource;
 use Illuminate\Http\Request;
 use App\Models\Staff;
+use App\Models\User;
 use App\Http\Requests\StaffRequest;
 use Illuminate\Http\Response;
 use App\Http\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class StaffController extends Controller
 {
@@ -54,18 +58,45 @@ class StaffController extends Controller
      * 
      * 
      */
-
+    //public function update(StaffRequest $request, Staff $staff)
+    
     public function update(StaffRequest $request, Staff $staff)
     {
         //
+ 
+        // if ((Auth::id() !== $staff->user_id)) {
+        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        // } 
+       
+      
+    // if ((Auth::id() !== $staff->user_id) && !Auth::user()->hasRole('admin')) {
+    //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+    // }
 
 
+        // if (!Auth::user()->hasRole('admin') ||  Auth::id() !== $staff->user_id) {
+        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        // }
+
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+
+        if (!$user->hasRole('admin') &&  $user->id !== $staff->user_id) {
+            return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        }
+          
+        //   $user = auth()->user();
+        // if (!auth()->user()->hasRole('admin') && auth()->id() !== $staff->user_id) {
+        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        // }
+        
         $data = $request->validated();
         try{
 
             Helper::processImage($request, $data);
 
-        $staff->update($request->validated());
+        $staff->update($data);
 
         return new StaffResource($staff);
     } catch (\Exception $e) {
@@ -79,7 +110,7 @@ class StaffController extends Controller
     public function destroy(Staff $staff)
     {
         // 
-        $staff->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        // $staff->delete();
+        // return response(null, Response::HTTP_NO_CONTENT);
     }
 } 

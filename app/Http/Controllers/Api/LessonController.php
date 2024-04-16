@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Resources\LessonResource;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class LessonController extends Controller
 {
@@ -33,11 +36,31 @@ class LessonController extends Controller
     public function store(LessonRequest $request)
     {
         //
+
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+        if(!$user->hasRole('admin'))
+        {
+
+
+            if (!$user->staffs()->where('group_id', $request->group_id)->exists()) {
+                return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
+            }
+
+        }
+
+
+
+
+
+
+
         // dd($request->all());
         $data = $request->validated();
 
         if (!Helper::isValidLessonTime($data['start_time'], $data['end_time'])) {
-            return response()->json(['message' => 'Start time must be after 08:00:00, end time must be before 18:00:00, and end time must be greater than start time.'], 400);
+            return response()->json(['error' => 'Start time must be after 08:00:00, end time must be before 18:00:00, and end time must be greater than start time.'], 400);
         }
 
         try{
@@ -105,7 +128,28 @@ class LessonController extends Controller
     public function update(LessonRequest $request, Lesson $lesson)
     {
         //
+
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+        if(!$user->hasRole('admin'))
+        {
+
+
+            if (!$user->staffs()->where('group_id', $request->group_id)->exists()) {
+                return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
+            }
+
+        }
+
+
+
+
+
         $data = $request->validated();
+        if (!Helper::isValidLessonTime($data['start_time'], $data['end_time'])) {
+            return response()->json(['error' => 'Start time must be after 08:00:00, end time must be before 18:00:00, and end time must be greater than start time.'], 400);
+        }
 
         try{
             $lesson->update($data);
@@ -135,6 +179,8 @@ class LessonController extends Controller
     public function destroy(Lesson $lesson)
     {
         
+        
+
         $lesson->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }

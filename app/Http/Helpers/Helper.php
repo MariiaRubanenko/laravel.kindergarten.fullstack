@@ -9,7 +9,7 @@ class Helper{
 
 
     public static function sendError($message, $errors=[], $code = 401){
-        $response= ['success'=> false, 'message'=> $message];
+        // $response= ['success'=> false, 'error'=> $message];
 
         if(!empty($errors)){
             $response['data']= $errors;
@@ -32,6 +32,13 @@ class Helper{
             $data['image_name'] = $imageName;
             $data['image_data'] = $imageData;
         }
+
+
+         else {
+        // Если изображение не было загружено, добавляем поля с null значениями
+        $data['image_name'] = null;
+        $data['image_data'] = null;
+    }
     }
 
 //     public static  function isAfterEightAM(string $startTime): bool

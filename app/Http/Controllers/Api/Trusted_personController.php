@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\Trusted_person;
 use Illuminate\Http\Response;
 use App\Http\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class Trusted_personController extends Controller
@@ -33,6 +36,9 @@ class Trusted_personController extends Controller
         // $data = $request->validated();
 
         // $trusted_person=Trusted_person::create($data);
+
+        
+ 
 
         $data = $request->validated();
 
@@ -86,26 +92,36 @@ class Trusted_personController extends Controller
     {
         //
 
+         /** @var \App\Models\User */
+         $user = Auth::user();
+        
+
+         if(!$user->hasRole('admin'))
+         {
+ 
+         
+             // Получить все child_profiles, связанные с family_accounts текущего пользователя
+             $editableTrustedPersonIds = Trusted_person::whereIn('family_account_id', function($query) use ($user) {
+                 $query->select('id')
+                     ->from('family_accounts')
+                     ->where('user_id', $user->id);
+             })->pluck('id')->toArray();
+ 
+             // Проверить, есть ли у пользователя доступ к редактированию этого child_profile
+             if (!in_array($trusted_person->id, $editableTrustedPersonIds)) {
+                 return response()->json(['error' => 'Hands off! This is not your trusted person.'], 403);
+             }
+         }
+
+
+
+
+
         // $trusted_person->update($request->validated());
         $data = $request->validated();
         
         try{
-            // // Проверяем, было ли загружено изображение
-            // if ($request->hasFile('image')) {
-            //     $image = $request->file('image');
-            //     $imageName = time().'.'.$image->extension();
-            //     // $imageData = file_get_contents($image->path());
-            //     $imageData = $image->get();
-        
-            //     // Добавляем информацию об изображении к данным для сохранения
-            //     $data['image_name'] = $imageName;
-            //     $data['image_data'] = $imageData;
-            // } else {
-            //     // Если изображение не было загружено, добавляем поля с null значениями
-            //     $data['image_name'] = null;
-            //     $data['image_data'] = null;
-            // }
-
+           
             Helper::processImage($request, $data);
             $trusted_person->update($data);
         return new TrustedPersonResource($trusted_person);
@@ -122,6 +138,29 @@ class Trusted_personController extends Controller
      */
     public function destroy(Trusted_person $trusted_person)
     {
+
+
+         /** @var \App\Models\User */
+         $user = Auth::user();
+        
+
+         if(!$user->hasRole('admin'))
+         {
+ 
+         
+             // Получить все child_profiles, связанные с family_accounts текущего пользователя
+             $editableTrustedPersonIds = Trusted_person::whereIn('family_account_id', function($query) use ($user) {
+                 $query->select('id')
+                     ->from('family_accounts')
+                     ->where('user_id', $user->id);
+             })->pluck('id')->toArray();
+ 
+             // Проверить, есть ли у пользователя доступ к редактированию этого child_profile
+             if (!in_array($trusted_person->id, $editableTrustedPersonIds)) {
+                 return response()->json(['error' => 'Hands off! This is not your trusted person.'], 403);
+             }
+         }
+
         //
         $trusted_person->delete();
         return response(null, Response::HTTP_NO_CONTENT);
