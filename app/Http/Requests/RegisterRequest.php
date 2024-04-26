@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'password'=>'required',
             'role' => [
                 'required',
-                Rule::in(['teacher', 'parent']), // Проверяем, что значение равно 'teacher' или 'parent'
+                Rule::in(['teacher', 'parent', 'admin']), // Проверяем, что значение равно 'teacher' или 'parent'
             ],
         ];
     }

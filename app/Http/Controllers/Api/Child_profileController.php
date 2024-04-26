@@ -40,10 +40,6 @@ class Child_profileController extends Controller
     public function store(ChildProfileRequest $request)
 {
 
-
-
-
-
     $data = $request->validated();
 
     try{
@@ -75,6 +71,7 @@ class Child_profileController extends Controller
         return response()->json(['error' => $e->getMessage()], 400);
     }
 }
+
 
 
 
@@ -164,9 +161,14 @@ class Child_profileController extends Controller
     
     public function destroy(Child_profile $childProfile)
     {
-        $childProfile->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        // $childProfile->delete();
+        // return response(null, Response::HTTP_NO_CONTENT);
 
-        //
+        try {
+            $childProfile->delete();
+            return response(null, Response::HTTP_NO_CONTENT);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 }

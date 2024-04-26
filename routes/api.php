@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('/groups',[GroupController::class, 'index'] );
     Route::put('/groups/{group}',[GroupController::class, 'update'] );
     Route::post('/groups',[GroupController::class, 'store'] );
+    Route::delete('/groups/{group}',[GroupController::class, 'destroy'] );
 
     Route::delete('/actions/{action}',[ActionController::class, 'destroy'] );
 
@@ -146,6 +147,8 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/trusted_persons/{trusted_person}',[Trusted_personController::class, 'show'] );
    
 });
+
+
 
 
 

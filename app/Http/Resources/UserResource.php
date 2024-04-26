@@ -34,6 +34,7 @@ class UserResource extends JsonResource
             // 'token' => $this->when($this->token, $this->token),
             'roles' => $this->roles->map(function($role) {
                 return [
+                    'id'=> $role->id,
                     'name' => $role->name,
                     'permissions' => $role->permissions->pluck('name') ?? [],
                 ];

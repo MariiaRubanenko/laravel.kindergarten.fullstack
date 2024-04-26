@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Http\Response;
 
 
+
 use Illuminate\Http\Resources\Json\JsonResource;
 ;
 
@@ -91,7 +92,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return response($request->user(), Response::HTTP_CREATED);
+            // return response($request->user(), Response::HTTP_CREATED);
+            return new UserResource($request->user());
         }
 
         return response([

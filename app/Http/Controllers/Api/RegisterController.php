@@ -43,6 +43,10 @@ class RegisterController extends Controller
             // Создаем запись в таблице staffs
             $this->createStaffAccount($user);
         }
+         else if ($roleName === 'admin') {
+           
+           
+        }
         
         // Auth::login($user);
 
