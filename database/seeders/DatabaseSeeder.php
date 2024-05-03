@@ -7,6 +7,7 @@ namespace Database\Seeders;
 
 use App\Models\Child_profile;
 use App\Models\Attendance;
+use Database\Seeders\MonthsSeeder;
 use Database\Seeders\DaySeeder;
 use Illuminate\Database\Seeder;
 use Database\Factories\ChildProfileFactory;
@@ -33,6 +34,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
 
         //  $this->call(DaysSeeder::class);
+
+        //   $this->call(MonthsSeeder::class);
         
         //Фабрики
         //ChildProfileFactory::factory(8)->create();

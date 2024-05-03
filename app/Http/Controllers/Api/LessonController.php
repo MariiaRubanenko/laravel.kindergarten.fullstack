@@ -179,7 +179,18 @@ class LessonController extends Controller
     public function destroy(Lesson $lesson)
     {
         
+         /** @var \App\Models\User */
+         $user = Auth::user();
         
+         if(!$user->hasRole('admin'))
+         {
+ 
+ 
+             if (!$user->staffs()->where('group_id', $lesson->group_id)->exists()) {
+                 return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
+             }
+ 
+         }
 
         $lesson->delete();
         return response(null, Response::HTTP_NO_CONTENT);

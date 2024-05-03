@@ -37,3 +37,10 @@ Route::get('/login',[AuthController::class, 'login'])->name ('login');
 
 Route::post('/login', [LoginController::class, 'login_api'])->name('login_api')->middleware('guest');
 Route::delete('/logout', [LoginController::class, 'destroy'])->middleware('auth');
+
+
+//Payment
+Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::post('/cancel', 'App\Http\Controllers\StripeController@session')->name('cancel');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');

@@ -5,9 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Helpers\Helper;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\Rule;
 
-class StaffRequest extends FormRequest
+class Daily_priceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +24,11 @@ class StaffRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // 'price' => 'required|numeric',
             
-        // 'image_name' => 'nullable|string|max:255',
-        // 'image_data' => 'nullable',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-        'user_id' => 'required|exists:users,id',
-        'group_id' => 'nullable|exists:groups,id',
-        // 'phone_number' => 'nullable|string|max:255',
-        'phone_number' => 'nullable', 'string', 'max:255', 'regex:/^\+380\d{9}$/',
-
+            'price' => 'required|numeric|min:0|gt:3',
+            // 'year' => 'required|integer|min:' . date('Y'),
+            'month_id' => 'nullable|exists:months,id',
         ];
     }
 

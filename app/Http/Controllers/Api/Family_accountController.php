@@ -7,6 +7,12 @@ use App\Http\Resources\FamilyAccountResource;
 use App\Models\Family_account;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\FamilyAccountRequest;
+use App\Http\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
+use App\Models\User;
 
 class Family_accountController extends Controller
 {
@@ -39,9 +45,27 @@ class Family_accountController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FamilyAccountRequest $request, Family_account $family_account)
     {
-        //
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+
+        if (!$user->hasRole('admin') &&  $user->id !== $family_account->user_id) {
+            return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        }
+          
+        $data = $request->validated();
+        try{
+
+            Helper::processImage($request, $data);
+
+        $family_account->update($data);
+
+        return new FamilyAccountResource($family_account);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 400);
+    }
     }
 
     /**

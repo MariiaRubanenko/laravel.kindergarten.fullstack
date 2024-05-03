@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Helper{
 
 
-    public static function sendError($message, $errors=[], $code = 401){
+    public static function sendError($message, $errors=[], $code = 422){
         // $response= ['success'=> false, 'error'=> $message];
 
         if(!empty($errors)){

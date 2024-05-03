@@ -39,7 +39,12 @@ class UserResource extends JsonResource
                     'permissions' => $role->permissions->pluck('name') ?? [],
                 ];
             }),
+
+            // 'staff_id'=> $this->staffs ? $this->staffs->id: null,
+            // 'family_account_id' => $this->family_accounts ? $this->family_accounts->id : null,
             // 'family_accounts'=>UserFamilyAccountResource::collection($this->family_accounts),
+            'staff_id' => $this->staffs->isNotEmpty() ? $this->staffs->pluck('id') : [],
+            'family_account_id' => $this->family_accounts->isNotEmpty() ? $this->family_accounts->pluck('id') : [],
         ];
         
     }

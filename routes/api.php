@@ -16,6 +16,9 @@ use App\Http\Controllers\Api\{
     StaffController,
     Trusted_personController,
     UserController,
+    Daily_priceController,
+    MonthController,
+    PaymentController
 
 };
 use App\Http\Resources\UserResource;
@@ -73,7 +76,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('staffs_without_group', [StaffController::class, 'staffsWithoutGroup']);
 
     Route::get('/family_accounts',[Family_accountController::class, 'index'] );
-    Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
+    // Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
 
     Route::get('/child_profiles',[Child_profileController::class, 'index'] );
     Route::post('/child_profiles',[Child_profileController::class, 'store'] );
@@ -88,8 +91,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::delete('/actions/{action}',[ActionController::class, 'destroy'] );
 
     Route::get('/lessons',[LessonController::class, 'index'] );
-    Route::delete('/lessons',[LessonController::class, 'destroy'] );
+  
 
+    Route::get('/months',[MonthController::class, 'index'] );
+    Route::get('/months/{month}',[MonthController::class, 'show'] );
+
+    Route::get('/daily_prices',[Daily_priceController::class, 'index'] );
+    Route::get('/daily_prices/{daily_price}',[Daily_priceController::class, 'show'] );
+    Route::post('/daily_prices',[Daily_priceController::class, 'store'] );
 });
 
 
@@ -106,10 +115,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
 
     Route::post('/lessons',[LessonController::class, 'store'] );
     Route::put('/lessons',[LessonController::class, 'update'] );
+    Route::delete('/lessons/{lesson}',[LessonController::class, 'destroy'] );
     Route::get('timetable_group/{group_id}/days/{day_id}',[LessonController::class, 'indexByGroupAndDay'] );
 
     Route::get('/days',[DayController::class, 'index'] );
     Route::get('/days/{day}',[DayController::class, 'show'] );
+
+    Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
+
 });
 
 
@@ -119,6 +132,12 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|parent']], function (
     Route::put('/child_profiles/{child_profile}',[Child_profileController::class, 'update'] );
 
     Route::delete('/trusted_persons',[Trusted_personController::class, 'destroy'] );
+
+    Route::get('/payments',[PaymentController::class, 'index'] );
+    Route::get('/payments/{payment}',[PaymentController::class, 'show'] );
+    Route::get('/family_account_payments/{family_account_id}',[PaymentController::class, 'paymentsByFamilyAccountId'] );
+
+    Route::put('/family_accounts/{family_account}',[Family_accountController::class, 'update'] );
 });
 
 
