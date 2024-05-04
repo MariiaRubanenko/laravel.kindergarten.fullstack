@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Group extends Model
 {
@@ -25,4 +26,15 @@ class Group extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     // Додати логування перед збереженням моделі
+    //     static::saving(function ($group) {
+    //         Log::info("Збереження групи: {$group->name}");
+    //     });
+    // }
 }
+

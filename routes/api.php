@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
     Route::get('/days',[DayController::class, 'index'] );
     Route::get('/days/{day}',[DayController::class, 'show'] );
 
-    Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
+    // Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
 
 });
 
@@ -138,6 +138,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|parent']], function (
     Route::get('/family_account_payments/{family_account_id}',[PaymentController::class, 'paymentsByFamilyAccountId'] );
 
     Route::put('/family_accounts/{family_account}',[Family_accountController::class, 'update'] );
+    Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
 });
 
 

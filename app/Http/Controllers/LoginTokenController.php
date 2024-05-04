@@ -25,7 +25,10 @@ class LoginTokenController extends Controller
             ]);
         }
 
-        return ['token' => $user->createToken($request->device_name)->plainTextToken];
+        return ['token' => $user->createToken($request->device_name)->plainTextToken,
+                'id'=>$user->id,
+                'family_account_id' => $user->family_accounts->isNotEmpty() ? $user->family_accounts->pluck('id') : [],
+                ];
     }
 
     public function destroy(Request $request)
