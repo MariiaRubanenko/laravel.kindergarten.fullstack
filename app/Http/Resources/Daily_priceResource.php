@@ -19,6 +19,7 @@ class Daily_priceResource extends JsonResource
             'price' => $this->price,
             'year' => $this->year,
             'month_id' => $this->month_id,
+            'month_text' => $this->name,
         ];
     }
 }

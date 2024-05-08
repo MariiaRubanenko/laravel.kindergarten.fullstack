@@ -111,12 +111,13 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
     Route::get('/actions',[ActionController::class, 'index'] );
     Route::get('/actions/{action}',[ActionController::class, 'show'] );
     Route::post('/actions',[ActionController::class, 'store'] );
-    Route::put('/actions/{action}',[ActionController::class, 'update'] );
+    Route::put('/actions/{action}',[ActionController::class, 'update'] );   
 
     Route::post('/lessons',[LessonController::class, 'store'] );
     Route::put('/lessons',[LessonController::class, 'update'] );
     Route::delete('/lessons/{lesson}',[LessonController::class, 'destroy'] );
     Route::get('timetable_group/{group_id}/days/{day_id}',[LessonController::class, 'indexByGroupAndDay'] );
+    Route::get('index_by_group_for_week/{group_id}',[LessonController::class, 'indexByGroupForWeek'] );
 
     Route::get('/days',[DayController::class, 'index'] );
     Route::get('/days/{day}',[DayController::class, 'show'] );
@@ -166,6 +167,8 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/trusted_persons',[Trusted_personController::class, 'index'] );
     Route::get('/trusted_persons/{trusted_person}',[Trusted_personController::class, 'show'] );
    
+
+    // Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
 });
 
 

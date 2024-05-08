@@ -22,6 +22,8 @@
                         <tr>
                             <td colspan="5" style="text-align:right;">
                                 <form action="/session" method="POST">
+                                <!-- <form method="POST" action="{{ route('session') }}"> 
+                                @csrf -->
                                 <!-- <a href="{{ url('/') }}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Continue Shopping</a> -->
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
 

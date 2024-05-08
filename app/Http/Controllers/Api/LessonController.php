@@ -104,7 +104,7 @@ class LessonController extends Controller
 
 
 
-    public function indexByGroupAndDay( Request $request,int $group_id, int $day_id)
+    public function indexByGroupAndDay( int $group_id, int $day_id)
     {
         $lessons = Lesson::where('group_id', $group_id)
             ->where('day_id', $day_id)
@@ -115,6 +115,23 @@ class LessonController extends Controller
     }
 
 
+        public function indexByGroupForWeek(int $group_id)
+    {
+        $lessons = Lesson::where('group_id', $group_id)
+            ->orderBy('day_id') // Спочатку сортуємо за днем тижня
+            ->orderBy('start_time') // Потім сортуємо за часом початку
+            ->get()
+            ->groupBy('day_id'); // Групуємо уроки за днем тижня
+
+        $schedule = [];
+
+        for ($day_id = 1; $day_id <= 7; $day_id++) {
+            $dayLessons = $lessons->get($day_id); // Отримуємо уроки для кожного дня тижня
+            $schedule[$day_id] = $dayLessons ? LessonResource::collection($dayLessons) : [];
+        }
+
+        return $schedule;
+    }
 
 
 

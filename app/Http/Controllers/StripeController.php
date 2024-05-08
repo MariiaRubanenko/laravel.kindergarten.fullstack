@@ -41,7 +41,8 @@ class StripeController extends Controller
             'cancel_url'  => route('cancel'),
         ]);
  
-        return redirect()->away($session->url);
+        // return redirect()->away($session->url);
+        return response()->json(['url' => $session->url]); // Повертаємо URL у форматі JSON
     }
  
     // public function success()

@@ -20,6 +20,7 @@ class PaymentResource extends JsonResource
             'user_name' => $this->family_account->user->name,
             'monthly_payment'=>$this->monthly_payment,
             'daily_price'=>$this->daily_price->price,
+            'month_id'=> $this->daily_price->month->id,
             'month' => $this->daily_price->month->name,
             'payment_status'=>$this->payment_status,
             'payment_date'=>$this->payment_date,
