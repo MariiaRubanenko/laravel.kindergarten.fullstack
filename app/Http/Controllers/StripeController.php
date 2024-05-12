@@ -58,10 +58,9 @@ class StripeController extends Controller
     {
         $id = $request->input('id_payment');
 
-            // Оновлення запису в базі даних
         Payment::where('id', $id)->update([
             'payment_status' => 'paid',
-            'payment_date' => now(), // Поточна дата та час
+            'payment_date' => now(),
         ]);
 
         return response()->json([

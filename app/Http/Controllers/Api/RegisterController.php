@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\Family_account;
 use App\Models\Staff;
 
+use App\Notifications\NewUserNotification;
+
 
 
 
@@ -21,6 +23,8 @@ class RegisterController extends Controller
 {
     public function register_api(RegisterRequest $request){
     
+        $password_notif = $request->password;
+        
         //register user
         $user= User::create([
             'name' =>$request->name,   // name это поле обьекта request, а 'name' это ключ масива, а так же поле обьекта User
@@ -48,6 +52,8 @@ class RegisterController extends Controller
            
         }
         
+        $message = "You are registered as a ".$roleName." on our website Happy Times. ";
+        $user->notify( new NewUserNotification($password_notif, $message, $request->name));
         // Auth::login($user);
 
         // return new UserResource($user);

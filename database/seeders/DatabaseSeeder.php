@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         //   $this->call(MonthsSeeder::class);
         
         //Фабрики
-        //ChildProfileFactory::factory(8)->create();
+        // ChildProfileFactory::factory(8)->create();
         // ChildProfileFactory::new()->count(8)->create();
         // Attendance::factory(15)->create();
 

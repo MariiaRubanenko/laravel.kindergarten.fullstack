@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FamilyAccountResource;
+use App\Http\Resources\FamilyMobileResource;
 use App\Models\Family_account;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\FamilyAccountRequest;
+use App\Http\Requests\ParentEmailRequest;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\SendParentNotification;
 use App\Http\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,6 +44,23 @@ class Family_accountController extends Controller
     {
         //return new UserResource(User::with('family_accounts')->findOrFail($id));
         return new FamilyAccountResource(Family_account::with('child_profiles')->findOrFail($id));
+    }
+
+    public function showForMobile(Family_account $family_account)
+    {
+        //return new UserResource(User::with('family_accounts')->findOrFail($id));
+        return new FamilyMobileResource($family_account);
+    }
+
+
+    public function sendParentEmail(ParentEmailRequest $request){
+
+        $data = $request->validated();
+
+        Notification::route('mail', $data['email'])
+                ->notify(new SendParentNotification($data['name'], $data['text_email'] ));
+
+                return response()->json(['message' => 'Notification sent'], 200);
     }
 
     /**
