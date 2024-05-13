@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FamilyAccountResource;
 use App\Http\Resources\FamilyMobileResource;
+use App\Http\Resources\CommentResource;
 use App\Models\Family_account;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\FamilyAccountRequest;
 use App\Http\Requests\ParentEmailRequest;
+use App\Http\Requests\CommentRequest;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\SendParentNotification;
 use App\Http\Helpers\Helper;
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\User;
+use App\Models\Comment;
 
 class Family_accountController extends Controller
 {
@@ -25,25 +28,36 @@ class Family_accountController extends Controller
      */
     public function index()
     {
-        //return UserResource::collection(User::with('family_accounts')->get());
-        return FamilyAccountResource::collection(Family_account::with('child_profiles')->get());
+       
+        // return FamilyAccountResource::collection(Family_account::with('child_profiles')->get());
+        return FamilyAccountResource::collection(Family_account::all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function storeComment(CommentRequest $request)
     {
         //
+        $data = $request->validated();
+        $comment = Comment::create($data);
+
+    return new CommentResource($comment);
     }
 
+    public function indexComment()
+    {
+
+    return CommentResource::collection(Comment::all());
+    }
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Family_account $family_account)
     {
-        //return new UserResource(User::with('family_accounts')->findOrFail($id));
-        return new FamilyAccountResource(Family_account::with('child_profiles')->findOrFail($id));
+        
+        // return new FamilyAccountResource(Family_account::with('child_profiles')->findOrFail($id));
+        return new FamilyAccountResource($family_account);
     }
 
     public function showForMobile(Family_account $family_account)

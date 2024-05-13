@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\{
     
     RegisterController,
     LoginController,
+    Family_accountController,
     
 
 };
@@ -37,6 +38,8 @@ Route::get('/login',[AuthController::class, 'login'])->name ('login');
 
 Route::post('/login', [LoginController::class, 'login_api'])->name('login_api')->middleware('guest');
 Route::delete('/logout', [LoginController::class, 'destroy'])->middleware('auth');
+
+Route::get('/comments', [Family_accountController::class, 'indexComment']);
 
 
 //Payment

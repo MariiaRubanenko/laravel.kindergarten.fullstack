@@ -151,6 +151,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:parent']], function () {
 
     Route::post('/trusted_persons',[Trusted_personController::class, 'store'] );
 
+    Route::post('/comment',[Family_accountController::class, 'storeComment'] );
     
 });
 
