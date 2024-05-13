@@ -17,7 +17,7 @@ class FamilyMobileResource extends JsonResource
         return [
             'family_account_id' => $this->id,
             'child_profiles' => $this->child_profiles->pluck('id'),
-            'trusted_personss' => $this->trusted_persons->pluck('id'),
+            'trusted_persons' => $this->trusted_persons->pluck('id'),
             // 'family_accounts'=>UserFamilyAccountResource::collection($this->family_accounts),
             // 'trusted_persons'=>TrustedPersonResource::collection($this->trusted_persons),
             'image_data' => $this->image_data ? base64_encode($this->image_data) : null,

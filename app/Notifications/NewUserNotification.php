@@ -45,7 +45,8 @@ class NewUserNotification extends Notification
                     
                     ->line($this->message)
                     ->line('Your temporary password ( '.$this->password_notif." )")
-                    ->action('Go to the site', 'http://laravel.kindergarten.two/');
+                    // ->action('Go to the site', 'http://laravel.kindergarten.two/');
+                    ->action('Go to the site', 'http://localhost:8081/');
     }
 
     /**
