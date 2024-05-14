@@ -24,7 +24,7 @@ class ParentEmailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
+            // 'name'=>'required',
             'email'=>'required|email|exists:users,email',
             'text_email' => 'required'
         ];

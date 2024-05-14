@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('staffs_without_group', [StaffController::class, 'staffsWithoutGroup']);
 
     Route::get('/family_accounts',[Family_accountController::class, 'index'] );
-    Route::post('/send_email',[Family_accountController::class, 'sendParentEmail'] );
+    // Route::post('/send_email',[Family_accountController::class, 'sendParentEmail'] );
     // Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
 
     Route::get('/child_profiles',[Child_profileController::class, 'index'] );
@@ -124,6 +124,9 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
     Route::get('/days/{day}',[DayController::class, 'show'] );
 
     // Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
+    Route::post('/send_email',[Family_accountController::class, 'sendParentEmail'] );
+    Route::get('/family_accountsByGroup/{group}',[Family_accountController::class, 'getFamilyAccountIdsByGroup'] );
+    
 
 });
 
