@@ -28,18 +28,9 @@ class GroupController extends Controller
      */
     public function store(GroupRequest $request)
 {
-    // $validatedData = $request->validate([
-    //     'name' => 'required|string|max:255|exists:groups,name',
+    
     $data = $request->validated();
-    // ]);
-    // $validator = Validator::make($request->all(), [
-    //     'name' => 'required|string|max:255|exists:groups,name',
-    // ]);
-
-    // if ($validator->fails()) {
-    //     Helper::sendError('validation error', $validator->errors());
-    // }
-
+    
     $created_group = Group::create($data);
 
     return new GroupResource($created_group);
@@ -64,12 +55,7 @@ class GroupController extends Controller
      */
     public function update(GroupRequest $request, Group $group)
     {
-        //
-        // $group = Group::findOrFail($id);
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        // ]);
-
+       
         $data = $request->validated();
         $group->update($data);
         return new GroupResource($group);

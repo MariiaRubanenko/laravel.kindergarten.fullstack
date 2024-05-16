@@ -74,7 +74,7 @@ class Family_accountController extends Controller
 
         $user = User::where('email', $data['email'])->first();
         $data['name'] = $user->name;
-        
+
         Notification::route('mail', $data['email'])
                 ->notify(new SendParentNotification($data['name'], $data['text_email'] ));
 
@@ -97,7 +97,7 @@ class Family_accountController extends Controller
 //     // Повертаємо масив унікальних family_account_id
 //     return $familyAccountIds->unique()->values()->all();
 // }
-public function getFamilyAccountIdsByGroup($groupId)
+public function getFamilyAccountIdsByGroup($groupId) 
 {
     // Витягуємо усіх дітей з заданою групою
     $children = Child_profile::where('group_id', $groupId)->get();

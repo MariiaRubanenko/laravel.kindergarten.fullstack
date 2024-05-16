@@ -126,6 +126,11 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
     // Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
     Route::post('/send_email',[Family_accountController::class, 'sendParentEmail'] );
     Route::get('/family_accountsByGroup/{group}',[Family_accountController::class, 'getFamilyAccountIdsByGroup'] );
+
+
+    //Test
+    Route::put('/saveImage/{id}',[StaffController::class, 'saveImage'] ); 
+
     
 
 });

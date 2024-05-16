@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\User;
 use App\Http\Requests\StaffRequest;
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Response;
 use App\Http\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
@@ -92,9 +93,11 @@ class StaffController extends Controller
         // }
         
         $data = $request->validated();
+
         try{
 
-            Helper::processImage($request, $data);
+            // Helper::processImage($request, $data);
+            Helper::processBase64Image($request, $data);
 
         $staff->update($data);
 
@@ -103,6 +106,50 @@ class StaffController extends Controller
         return response()->json(['error' => $e->getMessage()], 400);
     }
     }
+
+    // public function saveImage(ImageRequest $request){
+
+    //     $data = $request->validated();
+
+    //     try{
+
+    //         Helper::processImage($request, $data);
+
+    //     $staff->update($data);
+
+    //     return new StaffResource($staff);
+
+    // } catch (\Exception $e) {
+    //     return response()->json(['error' => $e->getMessage()], 400);
+    // }
+
+
+    // }
+    public function saveImage(ImageRequest $request){
+
+        $data = $request->validated();
+    
+        try{
+            // Отримання id з запиту
+            $id = 38;
+    
+            // Пошук запису за вказаним id
+            $staff = Staff::find($id);
+    
+            // Обробка зображення
+            Helper::processImage($request, $data);
+    
+            // Оновлення запису
+            $staff->update($data);
+    
+            return new StaffResource($staff);
+            
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+    
+
 
     /**
      * Remove the specified resource from storage.
