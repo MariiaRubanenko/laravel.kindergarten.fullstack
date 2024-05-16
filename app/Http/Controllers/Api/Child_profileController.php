@@ -61,7 +61,9 @@ class Child_profileController extends Controller
     // dd($data);
     // Создаем профиль ребенка
     
-    Helper::processImage($request, $data);
+    // Helper::processImage($request, $data);
+    Helper::processBase64Image($request, $data);
+
     $childProfile = Child_profile::create($data);
 
     return response()->json(['message' => 'Child profile created successfully', 'name' => $childProfile->name], 201, [], JSON_UNESCAPED_UNICODE);
@@ -146,7 +148,9 @@ class Child_profileController extends Controller
     //     $data['image_data'] = $imageData;
     // } 
  
-    Helper::processImage($request, $data);
+    // Helper::processImage($request, $data);
+    Helper::processBase64Image($request, $data);
+
     
     $childProfile->update($data);
 

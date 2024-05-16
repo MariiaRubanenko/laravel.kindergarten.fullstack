@@ -24,7 +24,8 @@ class FamilyAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'image' => ['nullable', new \App\Rules\Base64Image],
             'user_id' => 'required|exists:users,id',
             'phone_number' => ['nullable', 'string', 'max:255', 'regex:/^\+380\d{9}$/'],
         ];

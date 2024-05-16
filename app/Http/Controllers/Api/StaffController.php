@@ -125,29 +125,29 @@ class StaffController extends Controller
 
 
     // }
-    public function saveImage(ImageRequest $request){
+    // public function saveImage(ImageRequest $request){
 
-        $data = $request->validated();
+    //     $data = $request->validated();
     
-        try{
-            // Отримання id з запиту
-            $id = 38;
+    //     try{
+    //         // Отримання id з запиту
+    //         $id = 38;
     
-            // Пошук запису за вказаним id
-            $staff = Staff::find($id);
+    //         // Пошук запису за вказаним id
+    //         $staff = Staff::find($id);
     
-            // Обробка зображення
-            Helper::processImage($request, $data);
+    //         // Обробка зображення
+    //         Helper::processImage($request, $data);
     
-            // Оновлення запису
-            $staff->update($data);
+    //         // Оновлення запису
+    //         $staff->update($data);
     
-            return new StaffResource($staff);
+    //         return new StaffResource($staff);
             
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => $e->getMessage()], 400);
+    //     }
+    // }
     
 
 

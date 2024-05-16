@@ -134,7 +134,8 @@ public function getFamilyAccountIdsByGroup($groupId)
         $data = $request->validated();
         try{
 
-            Helper::processImage($request, $data);
+            // Helper::processImage($request, $data);
+            Helper::processBase64Image($request, $data);
 
         $family_account->update($data);
 

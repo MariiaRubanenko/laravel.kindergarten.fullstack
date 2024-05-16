@@ -44,24 +44,10 @@ class Trusted_personController extends Controller
 
 
         try{
-            // // Проверяем, было ли загружено изображение
-            // if ($request->hasFile('image')) {
-            //     $image = $request->file('image');
-            //     $imageName = time().'.'.$image->extension();
-            //     // $imageData = file_get_contents($image->path());
-            //     $imageData = $image->get();
-        
-            //     // Добавляем информацию об изображении к данным для сохранения
-            //     $data['image_name'] = $imageName;
-            //     $data['image_data'] = $imageData;
-            // } else {
-            //     // Если изображение не было загружено, добавляем поля с null значениями
-            //     $data['image_name'] = null;
-            //     $data['image_data'] = null;
-            // }
-            // dd($data);
-            // Создаем профиль ребенка
-            Helper::processImage($request, $data);
+            
+            // Helper::processImage($request, $data);
+            Helper::processBase64Image($request, $data);
+
             $trusted_person=Trusted_person::create($data);
         
             return response()->json(['message' => 'Trusted person created successfully', 'name' => $trusted_person->name], 201, [], JSON_UNESCAPED_UNICODE);
@@ -122,7 +108,9 @@ class Trusted_personController extends Controller
         
         try{
            
-            Helper::processImage($request, $data);
+            // Helper::processImage($request, $data);
+            Helper::processBase64Image($request, $data);
+            
             $trusted_person->update($data);
         return new TrustedPersonResource($trusted_person);
 

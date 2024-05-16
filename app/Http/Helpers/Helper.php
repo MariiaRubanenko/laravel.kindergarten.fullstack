@@ -47,7 +47,7 @@ class Helper{
     public static function processBase64Image(Request $request, &$data)
 {
 
-    if ($request->hasFile('image')) {
+    if ($request->has('image') && !empty($request->input('image'))) {
     // Розбиваємо рядок base64 на дві частини: тип даних і саме зображення
     $base64Image = $request->input('image');
 
