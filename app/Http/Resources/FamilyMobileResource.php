@@ -15,6 +15,9 @@ class FamilyMobileResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'user_id'=> $this->user_id,
+            'name' => $this->user->name,
+            'email' => $this->user->email,
             'family_account_id' => $this->id,
             'child_profiles' => $this->child_profiles->pluck('id'),
             'trusted_persons' => $this->trusted_persons->pluck('id'),
