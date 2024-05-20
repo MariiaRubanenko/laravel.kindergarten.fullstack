@@ -19,6 +19,7 @@ class StripeController extends Controller
         \Stripe\Stripe::setApiKey(config('stripe.sk'));
         $monthlyPayment = $request->input('monthly_payment');
         // $name = $request->input('name');
+        $family_account_id= $request->input('family_account_id');
         
         $session = \Stripe\Checkout\Session::create([
             'line_items'  => [
@@ -38,7 +39,7 @@ class StripeController extends Controller
             'mode'        => 'payment',
             // 'success_url' => route('success'),
             'success_url' => route('success', $request->all()),
-            'cancel_url'  => route('cancel'),
+            'cancel_url'  => route('cancel', $request->all()),
         ]);
  
         // return redirect()->away($session->url);
@@ -63,16 +64,31 @@ class StripeController extends Controller
             'payment_date' => now(),
         ]);
 
-        return response()->json([
-            'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible."
-        ], 200); 
+        // return response()->json([
+        //     'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible."
+        // ], 200); 
+        $family_account_id= $request->input('family_account_id');
+         // URL вашого фронтенду з параметрами
+    $frontendSuccessUrl = 'http://localhost:8081/payment/'.$family_account_id; // Заміна на ваш реальний URL фронтенду
+    $queryParams = http_build_query([
+        'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible.",
+    ]);
+
+    return redirect()->away($frontendSuccessUrl . '?' . $queryParams);
     }
 
-    public function cancel()
+    public function cancel(Request $request)
     {
-        return response()->json([
-            'message' => "Your payment has been canceled."
-        ], 200); 
+        // return response()->json([
+        //     'message' => "Your payment has been canceled."
+        // ], 200); 
+        $family_account_id= $request->input('family_account_id');
+        $frontendCancelUrl = 'http://localhost:8081/payment/'.$family_account_id; // Заміна на ваш реальний URL фронтенду
+        $queryParams = http_build_query([
+            'message' => "Your payment has been canceled.",
+        ]);
+    
+        return redirect()->away($frontendCancelUrl . '?' . $queryParams);
     }
 
 }
