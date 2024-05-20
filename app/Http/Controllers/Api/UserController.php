@@ -63,7 +63,7 @@ class UserController extends Controller
         $user = Auth::user();
     
         if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json(['error' => 'The old password is incorrect'], 401);
+            return response()->json(['error' => 'The old password is incorrect'], 400);
         }
     
         $request->user()->fill(['password' => Hash::make($request->new_password)])->save();

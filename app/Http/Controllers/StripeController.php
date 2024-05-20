@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
 
 class StripeController extends Controller
 {
@@ -67,11 +68,18 @@ class StripeController extends Controller
         // return response()->json([
         //     'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible."
         // ], 200); 
+
+        // Отримуємо ідентифікатор сесії користувача
+    $sessionId = Auth::id();
+
         $family_account_id= $request->input('family_account_id');
          // URL вашого фронтенду з параметрами
     $frontendSuccessUrl = 'http://localhost:8081/payment/'.$family_account_id; // Заміна на ваш реальний URL фронтенду
+
     $queryParams = http_build_query([
         'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible.",
+        'session_id' => $sessionId, // Передаємо ідентифікатор сесії у запиті
+        'family_account_id' => $family_account_id,
     ]);
 
     return redirect()->away($frontendSuccessUrl . '?' . $queryParams);
@@ -82,10 +90,14 @@ class StripeController extends Controller
         // return response()->json([
         //     'message' => "Your payment has been canceled."
         // ], 200); 
+        $sessionId = Auth::id();
         $family_account_id= $request->input('family_account_id');
+
         $frontendCancelUrl = 'http://localhost:8081/payment/'.$family_account_id; // Заміна на ваш реальний URL фронтенду
         $queryParams = http_build_query([
             'message' => "Your payment has been canceled.",
+            'session_id' => $sessionId, // Передаємо ідентифікатор сесії у запиті
+            'family_account_id' => $family_account_id,
         ]);
     
         return redirect()->away($frontendCancelUrl . '?' . $queryParams);
