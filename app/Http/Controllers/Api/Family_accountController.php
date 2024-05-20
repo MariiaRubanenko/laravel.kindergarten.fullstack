@@ -43,7 +43,8 @@ class Family_accountController extends Controller
         $data = $request->validated();
         $comment = Comment::create($data);
 
-    return new CommentResource($comment);
+    // return new CommentResource($comment);
+    return response()->json(['message' => 'Comment sent'], 200);
     }
 
     public function indexComment()
