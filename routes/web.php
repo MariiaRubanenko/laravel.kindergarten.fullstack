@@ -45,5 +45,5 @@ Route::get('/comments', [Family_accountController::class, 'indexComment']);
 //Payment
 Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
 Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
-Route::post('/cancel', 'App\Http\Controllers\StripeController@session')->name('cancel');
+Route::get('/cancel', 'App\Http\Controllers\StripeController@cancel')->name('cancel');
 Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
