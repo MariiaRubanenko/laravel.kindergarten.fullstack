@@ -8,6 +8,7 @@ use App\Http\Resources\GroupStaffResource;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\User;
+use App\Models\Child_profile;
 use App\Http\Requests\StaffRequest;
 use App\Http\Requests\ImageRequest;
 use Illuminate\Http\Response;
@@ -53,6 +54,30 @@ class StaffController extends Controller
         return GroupStaffResource::collection($staffs);
     }
 
+    public function staffsWithGroup($child_id){
+
+        // Знайти профіль дитини за її id
+        $childProfile = Child_profile::find($child_id);
+
+        // Перевірити, чи знайдено профіль дитини
+        if (!$childProfile) {
+            return response()->json(['error' => 'Child profile not found'], 404);
+        }
+        $groupId = $childProfile->group_id;
+
+        // Перевірити, чи існує group_id
+        if (is_null($groupId)) {
+            return response()->json(['error' => 'Group ID not found for this child'], 404);
+        }
+
+        // Знайти всіх співробітників із цим group_id
+        $staffs = Staff::where('group_id', $groupId)->get();
+
+        // Повернути результат
+        return StaffResource::collection($staffs);
+        // return response()->json($staffs);
+
+    }
 
     /**
      * Update the specified resource in storage.

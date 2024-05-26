@@ -150,6 +150,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|parent']], function (
     Route::put('/family_accounts/{family_account}',[Family_accountController::class, 'update'] );
     Route::get('/family_accounts/{family_account}',[Family_accountController::class, 'show'] );
     Route::get('/family_accounts_mobile/{family_account}',[Family_accountController::class, 'showForMobile'] );
+
+    Route::get('/staffsWithGroup/{child_id}',[StaffController::class, 'staffsWithGroup'] );
 });
 
 
