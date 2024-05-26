@@ -217,9 +217,10 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
 
 
 
+Route::delete('/delete_tokens', [LoginTokenController::class, 'destroy'])->middleware('auth:sanctum');
 
 
 
 // For mobile auth
 Route::post('/login_token', [LoginTokenController::class, 'store']);
-Route::delete('/delete_tokens', [LoginTokenController::class, 'destroy']);
+// Route::delete('/delete_tokens', [LoginTokenController::class, 'destroy']);
