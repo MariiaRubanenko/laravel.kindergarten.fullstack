@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 
     Route::delete('/actions/{action}',[ActionController::class, 'destroy'] );
 
-    Route::get('/lessons',[LessonController::class, 'index'] );
+    // Route::get('/lessons',[LessonController::class, 'index'] );
   
 
     Route::get('/months',[MonthController::class, 'index'] );
@@ -117,8 +117,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
     Route::post('/lessons',[LessonController::class, 'store'] );
     Route::put('/lessons',[LessonController::class, 'update'] );
     Route::delete('/lessons/{lesson}',[LessonController::class, 'destroy'] );
-    Route::get('timetable_group/{group_id}/days/{day_id}',[LessonController::class, 'indexByGroupAndDay'] );
-    Route::get('index_by_group_for_week/{group_id}',[LessonController::class, 'indexByGroupForWeek'] );
+    // Route::get('timetable_group/{group_id}/days/{day_id}',[LessonController::class, 'indexByGroupAndDay'] );
+    // Route::get('index_by_group_for_week/{group_id}',[LessonController::class, 'indexByGroupForWeek'] );
 
     Route::get('/days',[DayController::class, 'index'] );
     Route::get('/days/{day}',[DayController::class, 'show'] );
@@ -152,6 +152,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|parent']], function (
     Route::get('/family_accounts_mobile/{family_account}',[Family_accountController::class, 'showForMobile'] );
 
     Route::get('/staffsWithGroup/{child_id}',[StaffController::class, 'staffsWithGroup'] );
+
+  
 });
 
 
@@ -180,7 +182,9 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/trusted_persons',[Trusted_personController::class, 'index'] );
     Route::get('/trusted_persons/{trusted_person}',[Trusted_personController::class, 'show'] );
    
-
+    Route::get('/lessons',[LessonController::class, 'index'] );
+    Route::get('timetable_group/{group_id}/days/{day_id}',[LessonController::class, 'indexByGroupAndDay'] );
+    Route::get('index_by_group_for_week/{group_id}',[LessonController::class, 'indexByGroupForWeek'] );
     // Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
 });
 
