@@ -41,11 +41,8 @@ class NewUserNotification extends Notification
     {
         return (new MailMessage)
                     ->line('Welcome '.$this->user_name." !")
-                    // ->action('Notification Action', url('/'))
-                    
                     ->line($this->message)
                     ->line('Your temporary password ( '.$this->password_notif." )")
-                    // ->action('Go to the site', 'http://laravel.kindergarten.two/');
                     ->action('Go to the site', 'http://localhost:8081/');
     }
 

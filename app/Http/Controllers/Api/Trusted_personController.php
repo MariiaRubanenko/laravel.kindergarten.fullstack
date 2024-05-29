@@ -21,10 +21,7 @@ class Trusted_personController extends Controller
      */
     public function index()
     {
-        //
         return TrustedPersonResource::collection(Trusted_person::all());
-
-        //return GroupResource::collection(Group::all());
     }
 
     /**
@@ -32,20 +29,11 @@ class Trusted_personController extends Controller
      */
     public function store(TrustedPersonRequest $request)
     {
-        //
-        // $data = $request->validated();
-
-        // $trusted_person=Trusted_person::create($data);
-
-        
- 
-
         $data = $request->validated();
 
 
         try{
             
-            // Helper::processImage($request, $data);
             Helper::processBase64Image($request, $data);
 
             $trusted_person=Trusted_person::create($data);
@@ -53,7 +41,7 @@ class Trusted_personController extends Controller
             return response()->json(['message' => 'Trusted person created successfully', 'name' => $trusted_person->name], 201, [], JSON_UNESCAPED_UNICODE);
         
         
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 400);
             }
     }
@@ -63,10 +51,7 @@ class Trusted_personController extends Controller
      */
     public function show(string $id)
     {
-        //
         $trusted_person=Trusted_person::findOrFail($id);
-
-        
          return new TrustedPersonResource($trusted_person);
         
     }
@@ -81,34 +66,23 @@ class Trusted_personController extends Controller
          /** @var \App\Models\User */
          $user = Auth::user();
         
-
          if(!$user->hasRole('admin'))
          {
- 
-         
-             // Получить все child_profiles, связанные с family_accounts текущего пользователя
              $editableTrustedPersonIds = Trusted_person::whereIn('family_account_id', function($query) use ($user) {
                  $query->select('id')
                      ->from('family_accounts')
                      ->where('user_id', $user->id);
              })->pluck('id')->toArray();
- 
-             // Проверить, есть ли у пользователя доступ к редактированию этого child_profile
+
              if (!in_array($trusted_person->id, $editableTrustedPersonIds)) {
                  return response()->json(['error' => 'Hands off! This is not your trusted person.'], 403);
              }
          }
 
-
-
-
-
-        // $trusted_person->update($request->validated());
         $data = $request->validated();
         
         try{
            
-            // Helper::processImage($request, $data);
             Helper::processBase64Image($request, $data);
             
             $trusted_person->update($data);
@@ -135,15 +109,12 @@ class Trusted_personController extends Controller
          if(!$user->hasRole('admin'))
          {
  
-         
-             // Получить все child_profiles, связанные с family_accounts текущего пользователя
              $editableTrustedPersonIds = Trusted_person::whereIn('family_account_id', function($query) use ($user) {
                  $query->select('id')
                      ->from('family_accounts')
                      ->where('user_id', $user->id);
              })->pluck('id')->toArray();
  
-             // Проверить, есть ли у пользователя доступ к редактированию этого child_profile
              if (!in_array($trusted_person->id, $editableTrustedPersonIds)) {
                  return response()->json(['error' => 'Hands off! This is not your trusted person.'], 403);
              }

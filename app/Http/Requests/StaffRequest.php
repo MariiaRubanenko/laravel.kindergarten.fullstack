@@ -26,15 +26,9 @@ class StaffRequest extends FormRequest
     {
         return [
             
-        // 'image_name' => 'nullable|string|max:255',
-        // 'image_data' => 'nullable',
-        // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         'image' => ['nullable', new \App\Rules\Base64Image],
         'user_id' => 'nullable|exists:users,id',
         'group_id' => 'nullable|exists:groups,id',
-        
-        // 'phone_number' => 'nullable|string|max:255',
-        // 'phone_number' => 'nullable', 'string', 'max:255', 'regex:/^\+380\d{9}$/',
         'phone_number' => ['nullable', 'string', 'max:255', 'regex:/^\+380\d{9}$/'],
 
 
@@ -43,7 +37,6 @@ class StaffRequest extends FormRequest
 
     public function failedValidation(Validator $validator){
 
-        // send error message
         Helper::sendError('validation error', $validator->errors());
     }
 }

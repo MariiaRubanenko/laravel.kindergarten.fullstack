@@ -25,13 +25,6 @@ class UserSeeder extends Seeder
         $user_delete = Permission::create(['name'=>'user_delete']);
 
         $admin_role = Role::create(['name'=> 'admin']);
-        // $admin_role->givePermissionTo([
-        //     $user_create,
-        //     $user_list,
-        //     $user_update,
-        //     $user_view,
-        //     $user_delete
-        // ]);
 
         $admin = User::create([
             'name'=>'Admin',
@@ -40,15 +33,6 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->assignRole($admin_role);
-
-        // $admin->givePermissionTo([
-        //     $user_create,
-        //     $user_list,
-        //     $user_update,
-        //     $user_view,
-        //     $user_delete
-        // ]);
-
 
         
         $teacher = User::create([
@@ -65,12 +49,6 @@ class UserSeeder extends Seeder
             $user_update,
         ]);
 
-        // $teacher->givePermissionTo([
-        //     $user_list,
-        //     $user_update,
-        // ]);
-
-        ///////
         $parent = User::create([
             'name'=>'parent',
             'email'=>'parent@parent.com',
@@ -83,12 +61,6 @@ class UserSeeder extends Seeder
         $parent_role->givePermissionTo([
             $user_list,
         ]);
-
-        // $parent->givePermissionTo([
-        //     $user_list,
-        // ]);
-
-        ///////
 
 
 

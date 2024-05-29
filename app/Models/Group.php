@@ -27,14 +27,5 @@ class Group extends Model
         return $this->hasMany(Lesson::class);
     }
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     // Додати логування перед збереженням моделі
-    //     static::saving(function ($group) {
-    //         Log::info("Збереження групи: {$group->name}");
-    //     });
-    // }
 }
 

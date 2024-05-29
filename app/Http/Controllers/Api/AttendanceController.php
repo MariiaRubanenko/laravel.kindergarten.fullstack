@@ -37,17 +37,16 @@ class AttendanceController extends Controller
 
         $attendance= Attendance::create($data);
         return response()->json(['message' => 'Absence noted: ', 'date' => $attendance->date], 201, [], JSON_UNESCAPED_UNICODE);
-        //$trusted_person=Trusted_person::create($data);
         }catch (\Exception $e) {
 
             if ($e instanceof \Illuminate\Database\QueryException && $e->errorInfo[1] === 1062) {
+
                 return response()->json(['error' => 'The child\'s absence on this day has already been noted.'], 400);
             }
 
             return response()->json(['error' => $e->getMessage()], 400);
         }
-        // $created_attendance = Attendance::create($request->all());
-        // return new AttendanceResource($created_attendance); 
+        
     }
  
     /**
@@ -55,7 +54,7 @@ class AttendanceController extends Controller
      */
     public function show(string $id)
     {
-        // return Attendance::findOrFail($id);
+       
         $attendance = Attendance::findOrFail($id);
     return new AttendanceResource($attendance);
     }
@@ -63,15 +62,15 @@ class AttendanceController extends Controller
     public function absentChildrenByGroupAndDate($group_id, $date)
 {
 
-    // Получаем список детей, отсутствующих в указанную дату для указанной группы
+    
     $absentChildren = Attendance::where('date', $date)
         ->whereHas('child_profile', function ($query) use ($group_id) {
             $query->where('group_id', $group_id);
         })
-        ->with('child_profile') // Загружаем связанную модель ChildProfile
+        ->with('child_profile') 
         ->get();
 
-    // Формируем массив с именами детей и причинами отсутствия
+   
     $absentChildrenData = $absentChildren->map(function ($attendance) {
         return [
             'name' => $attendance->child_profile->name,

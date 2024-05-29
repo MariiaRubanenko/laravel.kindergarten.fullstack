@@ -8,18 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class StripeController extends Controller
 {
-    //
-    public function checkout()
-    {
-        return view('checkout');
-    }
-
-
+    
     public function session(Request $request)
     {
         \Stripe\Stripe::setApiKey(config('stripe.sk'));
         $monthlyPayment = $request->input('monthly_payment');
-        // $name = $request->input('name');
         $family_account_id= $request->input('family_account_id');
         
         $session = \Stripe\Checkout\Session::create([
@@ -37,25 +30,14 @@ class StripeController extends Controller
                 ],
                  
             ],
-            'mode'        => 'payment',
-            // 'success_url' => route('success'),
+            'mode' => 'payment',
             'success_url' => route('success', $request->all()),
             'cancel_url'  => route('cancel', $request->all()),
         ]);
  
-        // return redirect()->away($session->url);
-        return response()->json(['url' => $session->url]); // Повертаємо URL у форматі JSON
+        return response()->json(['url' => $session->url]);
     }
  
-    // public function success()
-    // {
-    //     return "Thanks for you order You have just completed your payment. The seeler will reach out to you as soon as possible";
-    // }
-
-    // public function cancel()
-    // {
-    //     return "Thanks for you order You have just completed your payment. The seeler will reach out to you as soon as possible";
-    // }
         public function success(Request $request)
     {
         $id = $request->input('id_payment');
@@ -65,20 +47,14 @@ class StripeController extends Controller
             'payment_date' => now(),
         ]);
 
-        // return response()->json([
-        //     'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible."
-        // ], 200); 
-
-        // Отримуємо ідентифікатор сесії користувача
     $sessionId = Auth::id();
 
-        $family_account_id= $request->input('family_account_id');
-         // URL вашого фронтенду з параметрами
-    $frontendSuccessUrl = 'http://localhost:8081/payment/'.$family_account_id; // Заміна на ваш реальний URL фронтенду
+    $family_account_id= $request->input('family_account_id');
+    $frontendSuccessUrl = 'http://localhost:8081/payment/'.$family_account_id;
 
     $queryParams = http_build_query([
         'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible.",
-        'session_id' => $sessionId, // Передаємо ідентифікатор сесії у запиті
+        'session_id' => $sessionId, 
         'family_account_id' => $family_account_id,
     ]);
 
@@ -87,16 +63,13 @@ class StripeController extends Controller
 
     public function cancel(Request $request)
     {
-        // return response()->json([
-        //     'message' => "Your payment has been canceled."
-        // ], 200); 
         $sessionId = Auth::id();
         $family_account_id= $request->input('family_account_id');
 
-        $frontendCancelUrl = 'http://localhost:8081/payment/'.$family_account_id; // Заміна на ваш реальний URL фронтенду
+        $frontendCancelUrl = 'http://localhost:8081/payment/'.$family_account_id;
         $queryParams = http_build_query([
             'message' => "Your payment has been canceled.",
-            'session_id' => $sessionId, // Передаємо ідентифікатор сесії у запиті
+            'session_id' => $sessionId, 
             'family_account_id' => $family_account_id,
         ]);
     

@@ -20,8 +20,6 @@ class AttendanceResource extends JsonResource
             'name' => $this->child_profile->name,
             'date'=>$this->date,
             'reason'=>$this->reason,
-           
-           
         ];
          
     }

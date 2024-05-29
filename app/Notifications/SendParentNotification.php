@@ -40,7 +40,6 @@ class SendParentNotification extends Notification
     {
         return (new MailMessage)
                     ->line('Dear '.$this->name." !")
-                    // ->action('Notification Action', url('/'))
                     ->line('You are contacted by the administration of the kindergarten Happy Times')
                     ->line($this->text_email);
     }

@@ -17,10 +17,6 @@ class FamilyAccountChildProfileResource extends JsonResource
         return [
             'id'=>$this->id,
             'name' => $this->name,
-            // 'gender'=> $this->gender,
-            // 'birthday'=>$this->birthday,
-            // 'allergies'=>$this->allergies,
-            // 'illnesses'=>$this->illnesses,
         ];
     }
 }

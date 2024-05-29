@@ -27,7 +27,7 @@ class RegisterController extends Controller
         
         //register user
         $user= User::create([
-            'name' =>$request->name,   // name это поле обьекта request, а 'name' это ключ масива, а так же поле обьекта User
+            'name' =>$request->name,
             'email'=>$request->email,
             'password'=>bcrypt($request->password)
         ]);
@@ -39,12 +39,13 @@ class RegisterController extends Controller
             $user->assignRole($role); 
         }
 
+        
          if ($roleName === 'parent') {
 
         $this->createFamilyAccount($user);
         
         } else if ($roleName === 'teacher') {
-            // Создаем запись в таблице staffs
+            
             $this->createStaffAccount($user);
         }
          else if ($roleName === 'admin') {
@@ -54,9 +55,7 @@ class RegisterController extends Controller
         
         $message = "You are registered as a ".$roleName." on our website Happy Times. ";
         $user->notify( new NewUserNotification($password_notif, $message, $request->name));
-        // Auth::login($user);
-
-        // return new UserResource($user);
+        
         return response($user, Response::HTTP_CREATED);
     }
 

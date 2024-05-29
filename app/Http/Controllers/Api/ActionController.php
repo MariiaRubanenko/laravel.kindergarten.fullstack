@@ -26,9 +26,6 @@ class ActionController extends Controller
      */
     public function store(ActionRequest $request)
     {
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        // ]);
         $data = $request->validated();
         try{
         $created_action = Action::create($data);
@@ -54,10 +51,6 @@ class ActionController extends Controller
      */
     public function update(ActionRequest $request, Action $action)
     {
-        // $action = Action::findOrFail($id);
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        // ]);
         $data = $request->validated();
         try{
         $action->update($data);
@@ -73,11 +66,6 @@ class ActionController extends Controller
      */
     public function destroy(Action $action)
     {
-        // $group->lessons()->delete(); 
-
-        // // Удаление группы после удаления уроков
-        // $group->delete();
-    
         $action->lessons()->delete(); 
 
 

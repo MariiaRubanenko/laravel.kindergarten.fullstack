@@ -38,8 +38,6 @@ class Daily_priceController extends Controller
         $id = $created_daily_price->id;
         $price = $created_daily_price->price;
         $month_id = $created_daily_price->month_id;
-    
-        // $totalPayment = $this->calculatePayment($id, $price, $month_id);
         $this->calculatePayment($id, $price, $month_id);
 
     return new Daily_priceResource($created_daily_price);
@@ -56,40 +54,12 @@ class Daily_priceController extends Controller
 
     }
 
-//     public function calculatePayment($price, $month_id)
-// {
-//     $families = Family_account::all();
-//     $totalPayment = 0;
-
-//     foreach ($families as $family) {
-//         $familyPayment = 0;
-//         $children = $family->childProfiles;
-
-//         foreach ($children as $child) {
-//             $absencesCount = Attendance::where('child_id', $child->id)
-//                 ->whereMonth('date', $month_id) // Шукаємо відсутності за певний місяць
-//                 ->count();
-
-//             // Розрахунок оплати за дитину
-//             $childPayment = $price * ($daysInMonth - $absencesCount);
-//             $familyPayment += $childPayment;
-//         }
-
-//         $totalPayment += $familyPayment;
-//     }
-
-//     return $totalPayment;
-// }
-
-
-
 public function calculatePayment($id_daily_price, $price, $month_id)
 {
-    $year = Carbon::now()->year; // Поточний рік
+    $year = Carbon::now()->year; 
     $daysInMonth = Carbon::create($year, $month_id)->daysInMonth;
 
     $families = Family_account::all();
-    // $totalPayment = 0;
 
     foreach ($families as $family) {
         $familyPayment = 0;
@@ -105,17 +75,16 @@ public function calculatePayment($id_daily_price, $price, $month_id)
             $familyPayment += $childPayment;
         }
 
-         // Створення запису у таблиці payments
+        
          Payment::create([
             'monthly_payment' => $familyPayment,
             'daily_price_id' => $id_daily_price,
             'family_account_id' => $family->id,
         ]);
 
-        // $totalPayment += $familyPayment;
+        
     }
 
-    // return $totalPayment;
 }
 
 

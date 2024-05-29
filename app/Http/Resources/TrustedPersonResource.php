@@ -19,7 +19,6 @@ class TrustedPersonResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            // 'image_data' => base64_encode($this->image_data),
             'image_data' => $this->image_data ? base64_encode($this->image_data) : null,
             
         ];
