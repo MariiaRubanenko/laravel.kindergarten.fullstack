@@ -1,8 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\{
+    
+    RegisterController,
+    LoginController,
+    Family_accountController,
+    
+
+};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +32,18 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
 Route::get('/login',[AuthController::class, 'login'])->name ('login');
-Route::get('/register',[AuthController::class, 'register'])->name ('register');
+// Route::get('/register',[AuthController::class, 'register'])->name ('register')->middleware('auth');
+
+// Route::post('/register',[RegisterController::class, 'register_api'])->name('register_api');
+
+Route::post('/login', [LoginController::class, 'login_api'])->name('login_api')->middleware('guest');
+Route::delete('/logout', [LoginController::class, 'destroy'])->middleware('auth');
+
+Route::get('/comments', [Family_accountController::class, 'indexComment']);
 
 
+//Payment
+Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::get('/cancel', 'App\Http\Controllers\StripeController@cancel')->name('cancel');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');

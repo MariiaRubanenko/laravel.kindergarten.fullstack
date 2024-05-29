@@ -7,6 +7,9 @@ use App\Http\Resources\GroupResource;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use Illuminate\Http\Response;
+use App\Http\Helpers\Helper;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\GroupRequest;
 
 class GroupController extends Controller
 {
@@ -23,17 +26,17 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GroupRequest $request)
 {
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-    ]);
-
-    $created_group = Group::create($validatedData);
+    
+    $data = $request->validated();
+    
+    $created_group = Group::create($data);
 
     return new GroupResource($created_group);
 }
  
+
 
     /**
      * Display the specified resource.
@@ -50,15 +53,11 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(GroupRequest $request, Group $group)
     {
-        //
-        $group = Group::findOrFail($id);
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        
-        $group->update($validatedData);
+       
+        $data = $request->validated();
+        $group->update($data);
         return new GroupResource($group);
     }
 

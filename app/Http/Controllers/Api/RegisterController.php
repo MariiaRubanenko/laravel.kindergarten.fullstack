@@ -8,10 +8,13 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Helpers\Helper;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Response;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use App\Models\Family_account;
 use App\Models\Staff;
+
+use App\Notifications\NewUserNotification;
 
 
 
@@ -20,6 +23,8 @@ class RegisterController extends Controller
 {
     public function register_api(RegisterRequest $request){
     
+        $password_notif = $request->password;
+        
         //register user
         $user= User::create([
             'name' =>$request->name,   // name это поле обьекта request, а 'name' это ключ масива, а так же поле обьекта User
@@ -42,10 +47,17 @@ class RegisterController extends Controller
             // Создаем запись в таблице staffs
             $this->createStaffAccount($user);
         }
+         else if ($roleName === 'admin') {
+           
+           
+        }
         
-        
+        $message = "You are registered as a ".$roleName." on our website Happy Times. ";
+        $user->notify( new NewUserNotification($password_notif, $message, $request->name));
+        // Auth::login($user);
 
-        return new UserResource($user);
+        // return new UserResource($user);
+        return response($user, Response::HTTP_CREATED);
     }
 
     protected function createFamilyAccount($user)

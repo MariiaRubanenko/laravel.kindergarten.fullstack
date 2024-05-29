@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -50,6 +51,13 @@ class User extends Authenticatable
     ];
 
 
+    protected static function booted()
+    {
+        static::deleting(fn (User $user) => $user->tokens()->delete());
+    }
+
+
+
     public function family_accounts()
     {
         return $this->hasMany(Family_account::class);
@@ -58,5 +66,5 @@ class User extends Authenticatable
     public function staffs()
     {
         return $this->hasMany(Staff::class);
-    }
+    } 
 }

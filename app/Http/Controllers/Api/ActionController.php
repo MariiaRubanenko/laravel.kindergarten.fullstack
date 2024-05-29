@@ -7,6 +7,8 @@ use App\Models\Action;
 use Illuminate\Http\Request;
 use App\Http\Resources\ActionResource;
 use Illuminate\Http\Response;
+use App\Http\Requests\ActionRequest;
+
 
 class ActionController extends Controller
 {
@@ -22,14 +24,14 @@ class ActionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ActionRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|max:255',
+        // ]);
+        $data = $request->validated();
         try{
-        $created_action = Action::create($validatedData);
+        $created_action = Action::create($data);
 
         return response()->json($created_action, 201);
 
@@ -50,14 +52,15 @@ class ActionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ActionRequest $request, Action $action)
     {
-        $action = Action::findOrFail($id);
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+        // $action = Action::findOrFail($id);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|max:255',
+        // ]);
+        $data = $request->validated();
         try{
-        $action->update($validatedData);
+        $action->update($data);
         
         return response()->json($action, 200);
         } catch (\Exception $e) {

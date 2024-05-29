@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChildProfileRequest;
 use App\Http\Resources\ChildProfileResource;
+use App\Http\Resources\FamilyAccountChildProfileResource;
 use App\Models\Child_profile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class Child_profileController extends Controller
@@ -21,9 +25,21 @@ class Child_profileController extends Controller
         
     }
 
-    
+    public function childrenWithoutGroup(Request $request)
+    {
+        $children = Child_profile::whereNull('group_id')->get();
+
+        // return response()->json($children);
+        return FamilyAccountChildProfileResource::collection($children);
+    }
+
+
+
+
+
     public function store(ChildProfileRequest $request)
 {
+
     $data = $request->validated();
 
     try{
@@ -45,7 +61,9 @@ class Child_profileController extends Controller
     // dd($data);
     // Создаем профиль ребенка
     
-    Helper::processImage($request, $data);
+    // Helper::processImage($request, $data);
+    Helper::processBase64Image($request, $data);
+
     $childProfile = Child_profile::create($data);
 
     return response()->json(['message' => 'Child profile created successfully', 'name' => $childProfile->name], 201, [], JSON_UNESCAPED_UNICODE);
@@ -55,6 +73,7 @@ class Child_profileController extends Controller
         return response()->json(['error' => $e->getMessage()], 400);
     }
 }
+
 
 
 
@@ -84,6 +103,34 @@ class Child_profileController extends Controller
     public function update(ChildprofileRequest $request, Child_profile $childProfile)
     {
        
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+
+        if(!$user->hasRole('admin'))
+        {
+
+        
+            // Получить все child_profiles, связанные с family_accounts текущего пользователя
+            $editableChildProfileIds = Child_profile::whereIn('family_account_id', function($query) use ($user) {
+                $query->select('id')
+                    ->from('family_accounts')
+                    ->where('user_id', $user->id);
+            })->pluck('id')->toArray();
+
+            // Проверить, есть ли у пользователя доступ к редактированию этого child_profile
+            if (!in_array($childProfile->id, $editableChildProfileIds)) {
+                return response()->json(['error' => 'Hands off! This is not your child.'], 403);
+            }
+        }
+
+        // if (!$user->hasRole('admin') &&  $user->id !== $staff->user_id) {
+        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        // }
+
+        // if (!$user->hasRole('admin') &&  $user->id !== $family_account_id->user_id) {
+        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
+        // }
 
         $data = $request->validated();
 
@@ -101,7 +148,9 @@ class Child_profileController extends Controller
     //     $data['image_data'] = $imageData;
     // } 
  
-    Helper::processImage($request, $data);
+    // Helper::processImage($request, $data);
+    Helper::processBase64Image($request, $data);
+
     
     $childProfile->update($data);
 
@@ -116,9 +165,14 @@ class Child_profileController extends Controller
     
     public function destroy(Child_profile $childProfile)
     {
-        $childProfile->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        // $childProfile->delete();
+        // return response(null, Response::HTTP_NO_CONTENT);
 
-        //
+        try {
+            $childProfile->delete();
+            return response(null, Response::HTTP_NO_CONTENT);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 }

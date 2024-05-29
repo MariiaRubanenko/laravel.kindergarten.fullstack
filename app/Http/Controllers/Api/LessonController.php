@@ -7,9 +7,13 @@ use App\Http\Requests\LessonRequest;
 use App\Models\Lesson;
 use App\Http\Helpers\Helper;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Resources\LessonResource;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class LessonController extends Controller
 {
@@ -32,11 +36,31 @@ class LessonController extends Controller
     public function store(LessonRequest $request)
     {
         //
+
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+        if(!$user->hasRole('admin'))
+        {
+
+
+            if (!$user->staffs()->where('group_id', $request->group_id)->exists()) {
+                return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
+            }
+
+        }
+
+
+
+
+
+
+
         // dd($request->all());
         $data = $request->validated();
 
         if (!Helper::isValidLessonTime($data['start_time'], $data['end_time'])) {
-            return response()->json(['message' => 'Start time must be after 08:00:00, end time must be before 18:00:00, and end time must be greater than start time.'], 400);
+            return response()->json(['error' => 'Start time must be after 08:00:00, end time must be before 18:00:00, and end time must be greater than start time.'], 400);
         }
 
         try{
@@ -78,13 +102,71 @@ class LessonController extends Controller
     return new LessonResource($lesson);
     }
 
+
+
+    public function indexByGroupAndDay( int $group_id, int $day_id)
+    {
+        $lessons = Lesson::where('group_id', $group_id)
+            ->where('day_id', $day_id)
+            ->get();
+
+        // return response()->json(['lessons' => $lessons], 200);
+        return LessonResource::collection($lessons);
+    }
+
+
+        public function indexByGroupForWeek(int $group_id)
+    {
+        $lessons = Lesson::where('group_id', $group_id)
+            ->orderBy('day_id') // Спочатку сортуємо за днем тижня
+            ->orderBy('start_time') // Потім сортуємо за часом початку
+            ->get()
+            ->groupBy('day_id'); // Групуємо уроки за днем тижня
+
+        $schedule = [];
+
+        for ($day_id = 1; $day_id <= 7; $day_id++) {
+            $dayLessons = $lessons->get($day_id); // Отримуємо уроки для кожного дня тижня
+            $schedule[$day_id] = $dayLessons ? LessonResource::collection($dayLessons) : [];
+        }
+
+        return $schedule;
+    }
+
+
+
+
+
+
+
     /**
      * Update the specified resource in storage.
      */
     public function update(LessonRequest $request, Lesson $lesson)
     {
         //
+
+        /** @var \App\Models\User */
+        $user = Auth::user();
+        
+        if(!$user->hasRole('admin'))
+        {
+
+
+            if (!$user->staffs()->where('group_id', $request->group_id)->exists()) {
+                return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
+            }
+
+        }
+
+
+
+
+
         $data = $request->validated();
+        if (!Helper::isValidLessonTime($data['start_time'], $data['end_time'])) {
+            return response()->json(['error' => 'Start time must be after 08:00:00, end time must be before 18:00:00, and end time must be greater than start time.'], 400);
+        }
 
         try{
             $lesson->update($data);
@@ -102,12 +184,31 @@ class LessonController extends Controller
 
     }
 
+
+
+
+
+
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Lesson $lesson)
     {
         
+         /** @var \App\Models\User */
+         $user = Auth::user();
+        
+         if(!$user->hasRole('admin'))
+         {
+ 
+ 
+             if (!$user->staffs()->where('group_id', $lesson->group_id)->exists()) {
+                 return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
+             }
+ 
+         }
+
         $lesson->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
