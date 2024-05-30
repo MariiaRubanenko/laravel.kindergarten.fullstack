@@ -128,6 +128,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:parent']], function () {
 
     Route::post('/comment',[Family_accountController::class, 'storeComment'] );
 
+    Route::put('/trusted_persons/{trusted_person}',[Trusted_personController::class, 'update'] );
+
     Route::get('/download-apk', function () {
         $file = public_path('apk/test.apk'); // Шлях до файлу в папці public
         return response()->download($file);
