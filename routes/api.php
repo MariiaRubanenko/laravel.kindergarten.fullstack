@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function () {
+
    
     Route::put('/staffs/{staff}', [StaffController::class, 'update']);
     Route::get('/groups/{group}',[GroupController::class, 'show'] );
