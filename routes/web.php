@@ -47,7 +47,10 @@ Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('s
 
 
 
+// Route::middleware([EnsureFrontendRequestsAreStateful::class])->group(function () {
 
+//     Route::post('/login', [LoginController::class, 'login_api'])->name('login_api');
+// });
 
 
 // Route::middleware([EnsureFrontendRequestsAreStateful::class])->group(function () {
