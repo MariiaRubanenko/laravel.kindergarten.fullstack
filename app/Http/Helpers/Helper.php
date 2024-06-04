@@ -54,10 +54,10 @@ class Helper{
     
     $data['image_name'] = $imageName;
     $data['image_data'] = $imageData;
-    }else {
+    }/* else {
         $data['image_name'] = null;
         $data['image_data'] = null;
-    }
+    } */
 }
 
 public static function isValidLessonTime(string $start_time, string $end_time): bool

@@ -26,24 +26,32 @@ use App\Http\Controllers\LoginTokenController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+/* Route::get('/', function () {
+     return view('app');
+ });
+ */
 
-Route::get('/', [HomeController::class, 'welcome'])->name('home');
+/*  Route::get('{any?}', fn () => view('app')) -> where('any', '*'); */
+
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '^(?!api).*$');
 
 
-Route::post('/login', [LoginController::class, 'login_api'])->name('login_api')->middleware('guest');
-Route::delete('/logout', [LoginController::class, 'destroy'])->middleware('auth');
+//Route::get('/', [HomeController::class, 'welcome'])->name('home');
 
-Route::get('/comments', [Family_accountController::class, 'indexComment']);
+
+Route::post('/api/login', [LoginController::class, 'login_api'])->name('login_api')->middleware('guest');
+Route::delete('/api/logout', [LoginController::class, 'destroy'])->middleware('auth');
+
+Route::get('/api/comments', [Family_accountController::class, 'indexComment']);
 // Route::post('/login_token', [LoginTokenController::class, 'store']);
 
 //Payment
-Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
-Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
-Route::get('/cancel', 'App\Http\Controllers\StripeController@cancel')->name('cancel');
-Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
+Route::get('/api/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+Route::post('/api/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::get('/api/cancel', 'App\Http\Controllers\StripeController@cancel')->name('cancel');
+Route::get('/api/success', 'App\Http\Controllers\StripeController@success')->name('success');
 
 
 

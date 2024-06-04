@@ -36,7 +36,7 @@ use App\Http\Controllers\LoginTokenController;
 */
 
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('/users',[UserController::class, 'index'] );
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
     Route::post('/register',[RegisterController::class, 'register_api'])->name('register_api');
@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 });
 
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function () {
+Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin|teacher']], function () {
 
    
     Route::put('/staffs/{staff}', [StaffController::class, 'update']);
@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|teacher']], function 
 
 
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin|parent']], function () {
+Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin|parent']], function () {
     
     Route::put('/child_profiles/{child_profile}',[Child_profileController::class, 'update'] );
 
@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|parent']], function (
 });
 
 
-Route::group(['middleware' => ['auth:sanctum', 'role:parent']], function () {
+Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:parent']], function () {
     
     Route::post('/attendances',[AttendanceController::class, 'store'] );
 
@@ -140,7 +140,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:parent']], function () {
 
 
 
-Route::group(['middleware'=>['auth:sanctum']], function(){
+Route::group(['prefix' => 'api','middleware'=>['auth:sanctum']], function(){
     
     Route::post('/change_password', [UserController::class, 'changePassword']);
     Route::get('/staffs/{staff}',[StaffController::class, 'show'] );
@@ -168,6 +168,7 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
 
 
 // For mobile auth
-Route::post('/login_token', [LoginTokenController::class, 'store']);
-Route::delete('/delete_tokens', [LoginTokenController::class, 'destroy'])->middleware('auth:sanctum');
+Route::post('/api/login_token', [LoginTokenController::class, 'store']);
+Route::delete('/api/delete_tokens', [LoginTokenController::class, 'destroy'])->middleware('auth:sanctum');
 
+Route::get('/api/comments', [Family_accountController::class, 'indexComment']);
