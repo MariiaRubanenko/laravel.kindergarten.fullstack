@@ -100,9 +100,10 @@ export default {
 
 .btn {
     margin-right: 4rem;
+    margin-top: 1rem;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 600px) {
     .d-flex.flex-wrap.align-items-start.justify-content-between {
         flex-direction: column;
         align-items: center;

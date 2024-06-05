@@ -17,7 +17,7 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1, localhost:8000, 90bb-178-150-111-49.ngrok-free.app',
+        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1, 1e18-178-150-111-49.ngrok-free.app',
         // 'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1, ',
         Sanctum::currentApplicationUrlWithPort()
     ))),

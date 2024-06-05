@@ -12,7 +12,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8000/api/";
+axios.defaults.baseURL = "https://1e18-178-150-111-49.ngrok-free.app/api/";
 
 import { logout } from "@/api/request";
 

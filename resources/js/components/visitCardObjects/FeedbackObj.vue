@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <div class="col-lg-6 col-9">
+        <div class="col-lg-8 col-9">
             <div class="text-center pb-2">
                 <p class="section-title px-5">
                     <span class="px-2">{{ $t("feedback.title") }}</span>

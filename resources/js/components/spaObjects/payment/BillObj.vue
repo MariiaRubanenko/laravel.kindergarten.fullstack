@@ -18,31 +18,35 @@
             >
                 {{ message }}
             </div>
-            <div
-                v-for="(control, index) in controls"
-                :key="index"
-                class="control-group"
-            >
-                <label class="label-light">{{ $t(control.label) }}</label>
-                <div class="output">
-                    <InfoBoxLoader :loading="loading" />
-                    <template v-if="!loading">
-                        {{ bill[control.property] || "-" }}
-                    </template>
-                </div>
-            </div>
-            <div>
-                <button
-                    v-if="
-                        bill.payment_status === 'unpaid' &&
-                        userRole === 'parent'
-                    "
-                    class="btn btn-danger py-2"
-                    style="border-radius: 10px; width: 100%"
-                    @click="payBill()"
+            <div class="p-3 trusted-person-container">
+                <div
+                    v-for="(control, index) in controls"
+                    :key="index"
+                    class="control-group"
                 >
-                    {{ $t("payments.buttons.pay") }}
-                </button>
+                    <label class="label-light" style="min-width: 150px">{{
+                        $t(control.label)
+                    }}</label>
+                    <div class="output">
+                        <InfoBoxLoader :loading="loading" />
+                        <template v-if="!loading">
+                            {{ bill[control.property] || "-" }}
+                        </template>
+                    </div>
+                </div>
+                <div>
+                    <button
+                        v-if="
+                            bill.payment_status === 'unpaid' &&
+                            userRole === 'parent'
+                        "
+                        class="btn btn-danger py-2"
+                        style="border-radius: 10px; width: 100%"
+                        @click="payBill()"
+                    >
+                        {{ $t("payments.buttons.pay") }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>

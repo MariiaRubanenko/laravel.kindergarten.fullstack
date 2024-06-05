@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="container col-lg-6">
+        <div class="container col-lg-8">
             <h2 style="margin-bottom: 0.75rem">
                 {{ $t("trustedPersons.title") }}
             </h2>

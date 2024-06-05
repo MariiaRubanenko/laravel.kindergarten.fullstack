@@ -3,7 +3,7 @@ import axios from "axios";
 export const getToken = async () => {
     try {
         const response = await axios.get(
-            "http://localhost:8000/sanctum/csrf-cookie"
+            "https://1e18-178-150-111-49.ngrok-free.app/sanctum/csrf-cookie"
         );
         console.log(response);
     } catch (error) {

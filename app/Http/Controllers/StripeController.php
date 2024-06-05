@@ -50,7 +50,7 @@ class StripeController extends Controller
     $sessionId = Auth::id();
 
     $family_account_id= $request->input('family_account_id');
-    $frontendSuccessUrl = 'http://localhost:8081/payment/'.$family_account_id;
+    $frontendSuccessUrl = 'https://1e18-178-150-111-49.ngrok-free.app/payment/'.$family_account_id;
 
     $queryParams = http_build_query([
         'message' => "Thanks for your order. You have just completed your payment. The seller will reach out to you as soon as possible.",
@@ -66,7 +66,7 @@ class StripeController extends Controller
         $sessionId = Auth::id();
         $family_account_id= $request->input('family_account_id');
 
-        $frontendCancelUrl = 'http://localhost:8081/payment/'.$family_account_id;
+        $frontendCancelUrl = 'https://1e18-178-150-111-49.ngrok-free.app/payment/'.$family_account_id;
         $queryParams = http_build_query([
             'message' => "Your payment has been canceled.",
             'session_id' => $sessionId, 

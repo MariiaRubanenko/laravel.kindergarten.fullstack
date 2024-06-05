@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="container col-lg-6 mb-5">
+        <div class="container col-lg-8 mb-5">
             <h2 style="margin-bottom: 0.75rem">
                 {{ $t("parentProfile.title") }}
             </h2>
