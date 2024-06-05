@@ -18,8 +18,12 @@ return [
     // 'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'paths' => ['*'],
+
+    //'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+
     'allowed_methods' => ['*'],
 
+    //'allowed_origins' => ['http://localhost:8081', 'https://4326-178-150-111-49.ngrok-free.app'],
     'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],

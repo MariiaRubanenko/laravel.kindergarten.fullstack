@@ -30,7 +30,6 @@ class Family_accountController extends Controller
     public function index()
     {
        
-        // return FamilyAccountResource::collection(Family_account::with('child_profiles')->get());
         return FamilyAccountResource::collection(Family_account::all());
     }
 
@@ -39,11 +38,9 @@ class Family_accountController extends Controller
      */
     public function storeComment(CommentRequest $request)
     {
-        //
         $data = $request->validated();
         $comment = Comment::create($data);
 
-    // return new CommentResource($comment);
     return response()->json(['message' => 'Comment sent'], 200);
     }
 
@@ -58,13 +55,11 @@ class Family_accountController extends Controller
     public function show(Family_account $family_account)
     {
         
-        // return new FamilyAccountResource(Family_account::with('child_profiles')->findOrFail($id));
         return new FamilyAccountResource($family_account);
     }
 
     public function showForMobile(Family_account $family_account)
     {
-        //return new UserResource(User::with('family_accounts')->findOrFail($id));
         return new FamilyMobileResource($family_account);
     }
 
@@ -82,31 +77,13 @@ class Family_accountController extends Controller
                 return response()->json(['message' => 'Notification sent'], 200);
     }
 
-//     public function getFamilyAccountIdsByGroup($groupId)
-// {
-//     // Витягуємо усіх дітей з заданою групою
-//     $children = Child_profile::where('group_id', $groupId)->get();
 
-//     // Створюємо колекцію для зберігання унікальних значень family_account_id
-//     $familyAccountIds = collect();
-
-//     // Додаємо унікальні family_account_id до колекції
-//     foreach ($children as $child) {
-//         $familyAccountIds->push($child->family_account_id);
-//     }
-
-//     // Повертаємо масив унікальних family_account_id
-//     return $familyAccountIds->unique()->values()->all();
-// }
 public function getFamilyAccountIdsByGroup($groupId) 
 {
-    // Витягуємо усіх дітей з заданою групою
     $children = Child_profile::where('group_id', $groupId)->get();
 
-    // Створюємо колекцію для зберігання унікальних сімейних акаунтів з їхніми ім'ям та email
     $familyAccounts = collect();
 
-    // Додаємо унікальні сімейні акаунти до колекції
     foreach ($children as $child) {
         $familyAccount = $child->family_account ;
         $familyAccounts->push([
@@ -116,9 +93,10 @@ public function getFamilyAccountIdsByGroup($groupId)
         ]);
     }
 
-    // Повертаємо колекцію унікальних сімейних акаунтів
     return $familyAccounts->unique()->values()->all();
 }
+
+
     /**
      * Update the specified resource in storage.
      */
@@ -135,7 +113,6 @@ public function getFamilyAccountIdsByGroup($groupId)
         $data = $request->validated();
         try{
 
-            // Helper::processImage($request, $data);
             Helper::processBase64Image($request, $data);
 
         $family_account->update($data);

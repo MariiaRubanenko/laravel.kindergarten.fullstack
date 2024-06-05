@@ -22,14 +22,13 @@ class LoginRequest extends FormRequest
     {
         return [
             'email'=>'required|email|exists:users,email',
-            'password'=>'required'// обязательно для заполнения; 
+            'password'=>'required'
         ];
     }
 
 
     public function failedValidation(Validator $validator){
 
-        // send error message
         Helper::sendError('validation error', $validator->errors());
     }
 }

@@ -31,7 +31,6 @@ class ImageRequest extends FormRequest
 
     public function failedValidation(Validator $validator){
 
-        // send error message
         Helper::sendError('validation error', $validator->errors());
     }
 }

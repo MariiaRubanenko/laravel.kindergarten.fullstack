@@ -15,9 +15,7 @@ class DayController extends Controller
      */
     public function index()
     {
-        // return Day::all();
         return DayResource::collection(Day::all());
-        // return DayResource::collection(Day::with('lessons')->get());
     }
 
     /**
@@ -50,7 +48,6 @@ class DayController extends Controller
      */
     public function destroy(Day $day)
     {
-        // $day->delete();
-        // return response(null, Response::HTTP_NO_CONTENT);
+       //
     }
 }

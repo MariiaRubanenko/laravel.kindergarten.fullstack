@@ -9,7 +9,7 @@ class Family_account extends Model
 {
     use HasFactory;
 
-    // protected $fillable = ['user_id'];
+    protected $table = "family_accounts";
     protected $fillable = ['user_id','image_name', 'image_data', 'phone_number'];
 
     public function user()

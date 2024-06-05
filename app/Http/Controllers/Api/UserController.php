@@ -21,7 +21,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        // return UserResource::collection(User::with('family_accounts')->get());
         return UserResource::collection(User::all());
     }
 
@@ -38,8 +37,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //return new UserResource(User::with('family_accounts')->findOrFail($id));
-
         return new UserResource($user);
     }
 
@@ -72,31 +69,11 @@ class UserController extends Controller
         return response()->json(['message' => 'Password changed successfully']);
     }
     
-
-
-
-// public function update(Request $request)
-//     {
-//         $attributes = $request->validate([
-//             'name' => ['string'],
-//             'email' => ['string', 'email', Rule::unique('users')->ignore($request->user())],
-//             'password' => ['confirmed', Password::defaults()],
-//         ]);
-
-//         $request->user()->fill($attributes)->save();
-
-//         return response()->noContent();
-//     }
-
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(User $user)
     {
-        // 
-
-
         foreach ($user->family_accounts as $familyAccount) {
             $familyAccount->child_profiles()->delete();
         }

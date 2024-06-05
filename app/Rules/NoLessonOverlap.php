@@ -20,16 +20,6 @@ class NoLessonOverlap implements Rule
      *
      * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    // public function validate(string $attribute, mixed $value, Closure $fail): void
-    // {
-    //     //
-    // }
-
-//     public function validate($attribute, $value, $parameters, $validator)
-// {
-//     // Вы можете игнорировать параметры и валидатор, так как они не используются в вашем правиле
-//     return $this->passes($attribute, $value);
-// }
 
 public function __construct($group_id, $day_id, $start_time, $end_time)
 {
@@ -42,7 +32,6 @@ public function __construct($group_id, $day_id, $start_time, $end_time)
 
     public function passes($attribute, $value)
     {
-        // Проверяем, есть ли перекрытия существующих уроков
         return !Lesson::where('group_id', $this->group_id)
             ->where('day_id', $this->day_id)
             ->where(function ($query) {

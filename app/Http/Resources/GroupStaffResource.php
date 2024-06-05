@@ -17,7 +17,6 @@ class GroupStaffResource extends JsonResource
         return[
             'id'=>$this->id,
             'name' => $this->user->name,
-            
         ];
     }
 }

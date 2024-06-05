@@ -25,52 +25,10 @@ class AttendanceRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-
-
-    //  Validator::extend('allowed_date', function ($attribute, $value, $parameters, $validator) {
-    //     $value = \Illuminate\Support\Carbon::parse($value); // Перетворюємо значення на Carbon
-    
-    //     $allowedTime = now()->startOfDay()->addHours(10);
-    //     return now()->lt($allowedTime) ? $value->lt($allowedTime) : $value->lte($allowedTime->addDay());
-    // });
-
     public function rules(): array
     {
-    //     $yesterday = now()->subDay()->startOfDay();
-    // $today = now()->startOfDay()->addHours(10);
-    // $tomorrow = now()->addDay()->startOfDay();
-
-    //     ValidatorFacade::extend('valid_date', function ($attribute, $value, $parameters, $validator) use ($yesterday, $today, $tomorrow) {
-    //     if ($value == $yesterday) {
-    //         return false; // Вчерашняя дата, выдаем ошибку
-    //     }
-
-    //     if ($value == $today && now()->format('H:i') >= '10:00') {
-    //         return false; // Сегодняшняя дата и время после 10:00, выдаем ошибку
-    //     }
-
-    //     return true; // Завтрашняя дата или сегодняшняя до 10:00, все ок
-    // });
 
         return [
-            
-            // 'date' => [
-            //     'required',
-            //     'date',
-            //     function ($attribute, $value, $fail) use ($yesterday, $today, $tomorrow) {
-            //         if ($value < $yesterday) {
-            //             $fail('The :attribute must be today or tomorrow.');
-            //         }
-    
-            //         if ($value == $yesterday) {
-            //             $fail('The :attribute cannot be yesterday.');
-            //         }
-    
-            //         if ($value == $today && now()->format('H:i') >= '10:00') {
-            //             $fail('The :attribute cannot be today after 10:00.');
-            //         }
-            //     },
-            // ],
             'date' => [
                 'required',
                 'date',
@@ -97,14 +55,13 @@ class AttendanceRequest extends FormRequest
                     }
                 },
             ],
-            'reason' => 'required|string', // Причина повинна бути рядком
+            'reason' => 'required|string', 
             'child_profile_id' => 'required|exists:child_profiles,id',
         ];
     }
 
     public function failedValidation(Validator $validator){
 
-        // send error message
         Helper::sendError('validation error', $validator->errors());
     }
 }

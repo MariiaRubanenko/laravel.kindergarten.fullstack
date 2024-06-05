@@ -24,17 +24,13 @@ class Daily_priceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'price' => 'required|numeric',
-            
             'price' => 'required|numeric|min:0|gt:3',
-            // 'year' => 'required|integer|min:' . date('Y'),
             'month_id' => 'nullable|exists:months,id',
         ];
     }
 
     public function failedValidation(Validator $validator){
 
-        // send error message
         Helper::sendError('validation error', $validator->errors());
     }
 }

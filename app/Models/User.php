@@ -20,7 +20,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
-     //Массив атрибутов модели, которые могут быть заполнены массово(массивом) 
     protected $fillable = [
         'name',
         'email',
@@ -32,7 +31,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-     //  атрибутов модели, которые должны быть скрыты при сериализации модели в массив или JSON.
     protected $hidden = [
         'password',
         'remember_token',
@@ -43,8 +41,7 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    // Массив атрибутов модели, которые должны быть приведены к определенным типам
-    // данных при получении их из базы данных или сохранении в нее.
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',

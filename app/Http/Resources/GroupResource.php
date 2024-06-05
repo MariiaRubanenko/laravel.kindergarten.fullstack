@@ -18,7 +18,6 @@ class GroupResource extends JsonResource
         return [
             'id'=>$this->id,
             'name' => $this->name,
-            
             'staffs'=>GroupStaffResource::collection($this->staffs),
             'child_profiles'=>FamilyAccountChildProfileResource::collection($this->child_profiles),
         ];

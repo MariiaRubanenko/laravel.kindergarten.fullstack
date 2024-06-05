@@ -22,10 +22,6 @@ class LessonController extends Controller
      */
     public function index()
     {
-        // return Lesson::all();
-        // $attendances = Attendance::all();
-        // return AttendanceResource::collection($attendances);
-
         $lesson = Lesson::all();
         return LessonResource::collection($lesson);
     }
@@ -50,13 +46,6 @@ class LessonController extends Controller
 
         }
 
-
-
-
-
-
-
-        // dd($request->all());
         $data = $request->validated();
 
         if (!Helper::isValidLessonTime($data['start_time'], $data['end_time'])) {
@@ -66,38 +55,23 @@ class LessonController extends Controller
         try{
             $lesson = Lesson::create($data);
             return response()->json(['message' => 'Lesson  created successfully', 'group_id' => $lesson->group_id], 201, [], JSON_UNESCAPED_UNICODE);
+            } catch (\Exception $e) {
 
+                if ($e instanceof \Illuminate\Database\QueryException && $e->errorInfo[1] === 1062) {
+                    return response()->json(['error' => 'A lesson with the same day, action, and group already exists.'], 400);
+                }
 
-    } catch (\Exception $e) {
-
-        if ($e instanceof \Illuminate\Database\QueryException && $e->errorInfo[1] === 1062) {
-            return response()->json(['error' => 'A lesson with the same day, action, and group already exists.'], 400);
-        }
-
-        return response()->json(['error' => $e->getMessage()], 400);
-        // abort(400, $e->getMessage());
-    }
+                return response()->json(['error' => $e->getMessage()], 400);
+            
+            }
     }
 
 
-//      function isAfterEightAM(string $startTime): bool
-// {
-//   // Перетворення start_time в об'єкт DateTime
-//   $startDateTime = Carbon::parse($startTime);
-
-//   // Створення об'єкта DateTime для 08:00:00
-//   $eightAM = Carbon::parse('08:00:00');
-
-//   // Порівняння start_time з 08:00:00
-//   return $startDateTime->isAfter($eightAM);
-// }
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        // return Lesson::findOrFail($id);
-
         $lesson =Lesson::findOrFail($id);
     return new LessonResource($lesson);
     }
@@ -109,8 +83,6 @@ class LessonController extends Controller
         $lessons = Lesson::where('group_id', $group_id)
             ->where('day_id', $day_id)
             ->get();
-
-        // return response()->json(['lessons' => $lessons], 200);
         return LessonResource::collection($lessons);
     }
 
@@ -118,15 +90,15 @@ class LessonController extends Controller
         public function indexByGroupForWeek(int $group_id)
     {
         $lessons = Lesson::where('group_id', $group_id)
-            ->orderBy('day_id') // Спочатку сортуємо за днем тижня
-            ->orderBy('start_time') // Потім сортуємо за часом початку
+            ->orderBy('day_id') 
+            ->orderBy('start_time') 
             ->get()
-            ->groupBy('day_id'); // Групуємо уроки за днем тижня
+            ->groupBy('day_id'); 
 
         $schedule = [];
 
         for ($day_id = 1; $day_id <= 7; $day_id++) {
-            $dayLessons = $lessons->get($day_id); // Отримуємо уроки для кожного дня тижня
+            $dayLessons = $lessons->get($day_id); 
             $schedule[$day_id] = $dayLessons ? LessonResource::collection($dayLessons) : [];
         }
 
@@ -151,17 +123,10 @@ class LessonController extends Controller
         
         if(!$user->hasRole('admin'))
         {
-
-
             if (!$user->staffs()->where('group_id', $request->group_id)->exists()) {
                 return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
             }
-
         }
-
-
-
-
 
         $data = $request->validated();
         if (!Helper::isValidLessonTime($data['start_time'], $data['end_time'])) {
@@ -173,14 +138,14 @@ class LessonController extends Controller
 
 
         return new LessonResource($lesson);
-    } catch (\Exception $e) {
+        } catch (\Exception $e) {
 
-        if ($e instanceof \Illuminate\Database\QueryException && $e->errorInfo[1] === 1062) {
-            return response()->json(['error' => 'A lesson with the same day, action, and group already exists.'], 400);
+            if ($e instanceof \Illuminate\Database\QueryException && $e->errorInfo[1] === 1062) {
+                return response()->json(['error' => 'A lesson with the same day, action, and group already exists.'], 400);
+            }
+
+            return response()->json(['error' => $e->getMessage()], 400);
         }
-
-        return response()->json(['error' => $e->getMessage()], 400);
-    }
 
     }
 
@@ -201,12 +166,9 @@ class LessonController extends Controller
         
          if(!$user->hasRole('admin'))
          {
- 
- 
              if (!$user->staffs()->where('group_id', $lesson->group_id)->exists()) {
                  return response()->json(['error' => 'You are not authorized to create a lesson for this group'], 403);
              }
- 
          }
 
         $lesson->delete();

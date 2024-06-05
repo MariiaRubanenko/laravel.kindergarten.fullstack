@@ -24,9 +24,7 @@ class TrustedPersonRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            // 'phone' => 'required|string|max:255',
             'phone' => ['required', 'string', 'max:255', 'regex:/^\+380\d{9}$/'],
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image' => ['nullable', new \App\Rules\Base64Image],
             'family_account_id' => 'nullable|exists:family_accounts,id',
         ];

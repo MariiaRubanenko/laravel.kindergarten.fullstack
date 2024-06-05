@@ -43,25 +43,6 @@ class Child_profileController extends Controller
     $data = $request->validated();
 
     try{
-    // Проверяем, было ли загружено изображение
-    // if ($request->hasFile('image')) {
-    //     $image = $request->file('image');
-    //     $imageName = time().'.'.$image->extension();
-    //     // $imageData = file_get_contents($image->path());
-    //     $imageData = $image->get();
-
-    //     // Добавляем информацию об изображении к данным для сохранения
-    //     $data['image_name'] = $imageName;
-    //     $data['image_data'] = $imageData;
-    // } else {
-    //     // Если изображение не было загружено, добавляем поля с null значениями
-    //     $data['image_name'] = null;
-    //     $data['image_data'] = null;
-    // }
-    // dd($data);
-    // Создаем профиль ребенка
-    
-    // Helper::processImage($request, $data);
     Helper::processBase64Image($request, $data);
 
     $childProfile = Child_profile::create($data);
@@ -80,20 +61,8 @@ class Child_profileController extends Controller
     /**
      * Display the specified resource.
      */
-    // public function show(string $id)
-    // {
-    //     //return new UserResource(User::with('family_accounts')->findOrFail($id));
-    //     return new ChildProfileResource(Child_profile::with('attendances')->findOrFail($id));
-    // }
     public function show($id)
     {
-
-        //return new UserResource(User::with('family_accounts')->findOrFail($id));
-        
-        //  $childProfile = Child_profile::findOrFail($id);
-
-        //  return new ChildProfileResource($childProfile);
-        
          return new ChildProfileResource(Child_profile::with('attendances')->findOrFail($id));
         
     }
@@ -105,50 +74,22 @@ class Child_profileController extends Controller
        
         /** @var \App\Models\User */
         $user = Auth::user();
-        
-
         if(!$user->hasRole('admin'))
         {
-
-        
-            // Получить все child_profiles, связанные с family_accounts текущего пользователя
             $editableChildProfileIds = Child_profile::whereIn('family_account_id', function($query) use ($user) {
                 $query->select('id')
                     ->from('family_accounts')
                     ->where('user_id', $user->id);
             })->pluck('id')->toArray();
 
-            // Проверить, есть ли у пользователя доступ к редактированию этого child_profile
+          
             if (!in_array($childProfile->id, $editableChildProfileIds)) {
                 return response()->json(['error' => 'Hands off! This is not your child.'], 403);
             }
         }
-
-        // if (!$user->hasRole('admin') &&  $user->id !== $staff->user_id) {
-        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
-        // }
-
-        // if (!$user->hasRole('admin') &&  $user->id !== $family_account_id->user_id) {
-        //     return response()->json(['error' => 'You are not authorized to update this profile'], 403);
-        // }
-
         $data = $request->validated();
 
     try{
-    // Проверяем, было ли загружено изображение
-    // if ($request->hasFile('image')) {
-    //     $image = $request->file('image');
-    //     $originalName = $image->getClientOriginalName();
-    //     $extension = $image->extension();
-    //     $imageName = pathinfo($originalName, PATHINFO_FILENAME) . '_' . time() . '.' . $extension;
-    //     $imageData = $image->get();
-
-    //     // Добавляем информацию об изображении к данным для сохранения
-    //     $data['image_name'] = $imageName;
-    //     $data['image_data'] = $imageData;
-    // } 
- 
-    // Helper::processImage($request, $data);
     Helper::processBase64Image($request, $data);
 
     
@@ -159,15 +100,12 @@ class Child_profileController extends Controller
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()], 400);
     }
-        //
+        
     }
 
     
     public function destroy(Child_profile $childProfile)
     {
-        // $childProfile->delete();
-        // return response(null, Response::HTTP_NO_CONTENT);
-
         try {
             $childProfile->delete();
             return response(null, Response::HTTP_NO_CONTENT);
