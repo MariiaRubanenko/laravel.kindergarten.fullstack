@@ -32,7 +32,11 @@
                     </button>
                 </div>
             </form>
-            <div class="alert alert-danger py-2" role="alert" v-if="errored">
+            <div
+                class="alert alert-danger py-2"
+                role="alert"
+                v-if="errored && !loading"
+            >
                 {{ error }}
             </div>
             <div

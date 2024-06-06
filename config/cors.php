@@ -21,7 +21,7 @@ return [
 
     'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
 
-    'allowed_origins' => ['https://1e18-178-150-111-49.ngrok-free.app'],
+    'allowed_origins' => [env('APP_URl')],
 
     'allowed_origins_patterns' => [],
 

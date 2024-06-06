@@ -12,26 +12,25 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "https://1e18-178-150-111-49.ngrok-free.app/api/";
+axios.defaults.baseURL = "https://e321-178-150-111-49.ngrok-free.app/api/";
 
 import { logout } from "@/api/request";
 
 axios.interceptors.response.use(
-    (response) => response, // Если ответ успешен, просто возвращаем его
+    (response) => response,
     (error) => {
         if (
             error.response &&
             error.response.status === 401 &&
             error.response.data.message === "Unauthenticated."
         ) {
-            // Если код ответа 401, вызываем функцию logout
             logout();
         } else if (error.response && error.response.status === 404) {
             router.push("/404");
         } else if (error.response && error.response.status === 500) {
             router.push("/500");
         }
-        return Promise.reject(error); // Пробрасываем ошибку дальше
+        return Promise.reject(error);
     }
 );
 

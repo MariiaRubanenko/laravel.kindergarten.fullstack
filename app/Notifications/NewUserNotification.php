@@ -43,7 +43,7 @@ class NewUserNotification extends Notification
                     ->line('Welcome '.$this->user_name." !")
                     ->line($this->message)
                     ->line('Your temporary password ( '.$this->password_notif." )")
-                    ->action('Go to the site', 'http://localhost:8081/');
+                    ->action('Go to the site', env('APP_URl')."/");
     }
 
     /**

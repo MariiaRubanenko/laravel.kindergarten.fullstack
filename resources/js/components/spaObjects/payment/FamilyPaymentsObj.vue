@@ -1,8 +1,11 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-lg-6 mb-5">
-            <h2 style="margin-bottom: 1.5rem">
+            <h2 v-if="userRole === 'admin'" style="margin-bottom: 1.5rem">
                 {{ $t("payments.title") }}
+            </h2>
+            <h2 v-if="userRole === 'parent'" style="margin-bottom: 1.5rem">
+                {{ $t("payments.titleParent") }}
             </h2>
             <div class="alert alert-danger py-2" role="alert" v-if="errored">
                 {{ error }}
@@ -12,7 +15,7 @@
                 role="alert"
                 v-if="payments.length == 0 && !loading"
             >
-                {{ $t("groupChildren.dataNo") }}
+                {{ $t("payments.dataNo") }}
             </div>
             <div
                 class="control-group-payment"

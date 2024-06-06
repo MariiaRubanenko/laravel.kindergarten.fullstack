@@ -2,10 +2,9 @@ import axios from "axios";
 
 export const getToken = async () => {
     try {
-        const response = await axios.get(
-            "https://1e18-178-150-111-49.ngrok-free.app/sanctum/csrf-cookie"
+        await axios.get(
+            "https://e321-178-150-111-49.ngrok-free.app/sanctum/csrf-cookie"
         );
-        console.log(response);
     } catch (error) {
         console.error(error);
     }
@@ -20,7 +19,6 @@ function getCookie(name) {
     if (!cookie) {
         return null;
     }
-    console.log(cookie);
     return decodeURIComponent(cookie.split("=")[1]);
 }
 
@@ -32,7 +30,6 @@ export function getCookies(name) {
         if (!cookie) {
             return null;
         }
-        console.log(cookie);
         return decodeURIComponent(cookie.split("=")[1]);
     } catch (error) {
         console.error(error);

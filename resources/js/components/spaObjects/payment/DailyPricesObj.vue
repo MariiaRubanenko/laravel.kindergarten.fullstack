@@ -12,7 +12,7 @@
                 role="alert"
                 v-if="dailyPrices.length == 0 && !loading"
             >
-                {{ $t("groupChildren.dataNo") }}
+                {{ $t("dailyPrices.dataNo") }}
             </div>
             <div
                 class="output-group"

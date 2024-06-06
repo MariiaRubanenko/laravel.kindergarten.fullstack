@@ -59,8 +59,6 @@ Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin']],
 
     Route::delete('/actions/{action}',[ActionController::class, 'destroy'] );
 
-  
-
     Route::get('/months',[MonthController::class, 'index'] );
     Route::get('/months/{month}',[MonthController::class, 'show'] );
 
@@ -94,9 +92,6 @@ Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin|tea
     Route::post('/send_email',[Family_accountController::class, 'sendParentEmail'] );
     Route::get('/family_accountsByGroup/{group}',[Family_accountController::class, 'getFamilyAccountIdsByGroup'] );
 
-
-    
-
 });
 
 
@@ -105,8 +100,8 @@ Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin|par
     
     Route::put('/child_profiles/{child_profile}',[Child_profileController::class, 'update'] );
 
-    Route::delete('/trusted_persons',[Trusted_personController::class, 'destroy'] );
-
+    Route::delete('/trusted_persons/{trusted_person}',[Trusted_personController::class, 'destroy'] );
+    
     Route::get('/payments',[PaymentController::class, 'index'] );
     Route::get('/payments/{payment}',[PaymentController::class, 'show'] );
     Route::get('/family_account_payments/{family_account_id}',[PaymentController::class, 'paymentsByFamilyAccountId'] );
@@ -116,7 +111,6 @@ Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:admin|par
     Route::get('/family_accounts_mobile/{family_account}',[Family_accountController::class, 'showForMobile'] );
 
     Route::get('/staffsWithGroup/{child_id}',[StaffController::class, 'staffsWithGroup'] );
-
   
 });
 
@@ -132,7 +126,7 @@ Route::group(['prefix' => 'api','middleware' => ['auth:sanctum', 'role:parent']]
     Route::put('/trusted_persons/{trusted_person}',[Trusted_personController::class, 'update'] );
 
     Route::get('/download-apk', function () {
-        $file = public_path('apk/test.apk'); // Шлях до файлу в папці public
+        $file = public_path('apk/HappyTimes.apk'); // Шлях до файлу в папці public
         return response()->download($file);
     });
     

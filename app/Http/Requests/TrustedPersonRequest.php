@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Http\Helpers\Helper;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TrustedPersonRequest extends FormRequest
@@ -28,5 +29,9 @@ class TrustedPersonRequest extends FormRequest
             'image' => ['nullable', new \App\Rules\Base64Image],
             'family_account_id' => 'nullable|exists:family_accounts,id',
         ];
+    }
+    public function failedValidation(Validator $validator){
+
+        Helper::sendError('validation error', $validator->errors());
     }
 }

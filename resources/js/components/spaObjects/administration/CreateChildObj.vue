@@ -177,7 +177,7 @@ export default {
         },
         redirectToFamily() {
             router.push({
-                path: `/familyProfile/${this.child.family_account_id}`,
+                path: `/childrenOfFamily/${this.child.family_account_id}`,
             });
         },
     },

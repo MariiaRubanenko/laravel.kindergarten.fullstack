@@ -31,11 +31,11 @@ class DatabaseSeeder extends Seeder
         //Сидеры 
         //Позволяет одним действием заполнить базу данных необходимыми данными при каждом запуске сида,
         // чтобы запускался и  UserSeeder,
-        // $this->call(UserSeeder::class);
+/*         $this->call(UserSeeder::class);
 
-        //  $this->call(DaysSeeder::class);
+        $this->call(DaysSeeder::class);
 
-        //   $this->call(MonthsSeeder::class);
+         $this->call(MonthsSeeder::class); */
         
         //Фабрики
         // ChildProfileFactory::factory(8)->create();

@@ -285,7 +285,7 @@
             "children": "Children",
             "staff": "Staff",
             "timetable": "Timetable",
-            "attendance": "Attendance"
+            "attendance": "Absence"
         },
         "families": {
             "title": "Families",
@@ -507,7 +507,7 @@
     },
 
     "attendance": {
-        "title": "Attandance",
+        "title": "Children absence",
         "date": {
             "label": "Date"
         },
@@ -564,7 +564,7 @@
     },
 
     "createDailyPrices": {
-        "title": "Create new daily price",
+        "title": "Issue invoices for the past month",
         "month": { "label": "Month", "placeholder": "Choose month" },
         "price": {
             "label": "Price",
@@ -573,7 +573,9 @@
     },
 
     "dailyPrices": {
-        "title": "Daily prices"
+        "title": "Daily prices",
+        "dataLoadingError": "Error loading daily prices!",
+        "dataNo": "No prices created!"
     },
 
     "months": {
@@ -592,14 +594,15 @@
     },
 
     "payments": {
-        "title": "Your payments",
-
+        "title": "Payments",
+        "titleParent": "Your payments",
         "buttons": {
             "pay": "Pay",
             "bill": "Bill",
             "paid": "Paid",
             "unpaid": "Unpaid"
-        }
+        },
+        "dataNo": "No payments submitted!"
     },
 
     "bill": {
@@ -667,6 +670,7 @@
         "bill": "Error while loading bill!",
         "dailyPrices": "Error while loading daily prices!",
         "payments": "Error while loading payments!",
-        "months": "Error while loading months!"
+        "months": "Error while loading months!",
+        "apk": "Error while loading apk!"
     }
 }

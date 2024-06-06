@@ -80,8 +80,8 @@ export default {
                 link.click();
             } catch (error) {
                 this.errored = true;
-                this.error = this.$t("loading.bill");
-                console.error(this.$t("loading.bill"), error);
+                this.error = this.$t("loading.apk");
+                console.error(this.$t("loading.apk"), error);
             } finally {
                 this.loading = false;
             }
