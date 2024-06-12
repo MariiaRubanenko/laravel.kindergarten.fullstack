@@ -188,7 +188,7 @@ export default {
                     this.mail.text_email = "";
                     setTimeout(() => {
                         this.updating = true;
-                        router.go();
+                        this.$emit("refresh-main");
                     }, 6000);
                 } catch (error) {
                     console.error("Error sending email:", error);

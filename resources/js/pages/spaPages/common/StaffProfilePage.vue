@@ -1,7 +1,10 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main><HeaderObj /> <StaffProfileObj /></main>
+        <main>
+            <HeaderObj />
+            <StaffProfileObj />
+        </main>
     </div>
 </template>
 

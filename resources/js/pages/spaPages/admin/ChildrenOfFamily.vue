@@ -1,7 +1,10 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main><HeaderObj /> <ChildrenOfFamilyObj /></main>
+        <main :key="mainKey">
+            <HeaderObj />
+            <ChildrenOfFamilyObj @refresh-main="refreshMain" />
+        </main>
     </div>
 </template>
 
@@ -17,7 +20,12 @@ export default {
         ChildrenOfFamilyObj,
     },
     data() {
-        return { familyId: this.$route.params.familyId };
+        return { mainKey: 0, familyId: this.$route.params.familyId };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
     },
 };
 </script>

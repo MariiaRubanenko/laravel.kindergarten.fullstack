@@ -101,7 +101,7 @@ export default {
                         "X-XSRF-Token": getCookies("XSRF-TOKEN"),
                     },
                 });
-                router.go();
+                this.$emit("refresh-main");
             } catch (error) {
                 this.errored = true;
                 this.error = this.$t("staffsWithoutGroup.addError");

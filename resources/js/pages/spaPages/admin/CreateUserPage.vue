@@ -1,9 +1,9 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <HeaderObj />
-            <CreateUserObj />
+            <CreateUserObj @refresh-main="refreshMain" />
         </main>
     </div>
 </template>
@@ -19,7 +19,14 @@ export default {
         HeaderObj,
         CreateUserObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 

@@ -26,4 +26,20 @@ class PaymentResource extends JsonResource
             'payment_date'=>$this->payment_date,
         ];
     }
+     /**
+     * Sort the collection by month_id in descending order.
+     *
+     * @param  mixed  $resource
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
+     */
+    public static function collection($resource)
+    {
+        // Сортуємо колекцію перед тим, як повернути її
+        $sorted = $resource->sortByDesc(function ($payment) {
+            return $payment->daily_price->month->id;
+        });
+
+        return parent::collection($sorted);
+    }
+
 }

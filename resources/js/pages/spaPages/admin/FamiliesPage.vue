@@ -1,7 +1,10 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main><HeaderObj /> <FamiliesObj /></main>
+        <main :key="mainKey">
+            <HeaderObj />
+            <FamiliesObj @refresh-main="refreshMain" />
+        </main>
     </div>
 </template>
 
@@ -16,7 +19,14 @@ export default {
         HeaderObj,
         FamiliesObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 

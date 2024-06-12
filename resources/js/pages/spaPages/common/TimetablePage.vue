@@ -1,7 +1,7 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <div class="d-lg-flex justify-content-center">
                 <div class="col-lg-3 mb-5 mr-3 fullscreen-container order-lg-2">
                     <HeaderObj />
@@ -25,7 +25,10 @@
                     />
                 </div>
                 <div class="col-lg-9 mb-5 mr-lg-3 mb-lg-0 mr-lg-3">
-                    <TimetableObj :key="timetableKey" />
+                    <TimetableObj
+                        :key="timetableKey"
+                        @refresh-main="refreshMain"
+                    />
                 </div>
             </div>
         </main>
@@ -58,6 +61,7 @@ export default {
             activityDeleteKey: 0,
             activityCreateKey: 0,
             lessonCreateKey: 0,
+            mainKey: 0,
         };
     },
     methods: {
@@ -72,6 +76,9 @@ export default {
         },
         refreshLessonCreate() {
             this.lessonCreateKey++;
+        },
+        refreshMain() {
+            this.mainKey++;
         },
     },
 };

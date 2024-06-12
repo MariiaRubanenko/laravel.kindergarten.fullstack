@@ -1,9 +1,9 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <HeaderObj />
-            <CreateDailyPricesObj />
+            <CreateDailyPricesObj @refresh-main="refreshMain" />
             <DailyPricesObj />
         </main>
     </div>
@@ -22,7 +22,14 @@ export default {
         CreateDailyPricesObj,
         DailyPricesObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 

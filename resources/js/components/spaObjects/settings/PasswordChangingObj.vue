@@ -182,7 +182,7 @@ export default {
                     this.passwords.passwordConfirm = "";
                     setTimeout(() => {
                         this.updating = true;
-                        router.go();
+                        this.$emit("refresh-password-changing");
                     }, 6000);
                 } catch (error) {
                     console.error("Error changing password:", error);

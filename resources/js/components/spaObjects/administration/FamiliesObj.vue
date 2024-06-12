@@ -110,7 +110,7 @@ export default {
                     (family) => family.family_account_id !== familyId
                 );
                 this.closeModal();
-                router.go();
+                this.$emit("refresh-main");
             } catch (error) {
                 this.errored = true;
                 this.error = this.$t("families.deleteError");

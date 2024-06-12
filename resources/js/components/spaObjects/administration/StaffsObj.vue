@@ -105,7 +105,7 @@ export default {
                     (staff) => staff.id !== staffId
                 );
                 this.closeModal();
-                router.go();
+                this.$emit("refresh-main");
             } catch (error) {
                 this.errored = true;
                 this.error = this.$t("staffs.deleteError");

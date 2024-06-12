@@ -202,6 +202,8 @@ export default {
                 router.push({ path: `/staff` });
             } else if (this.user.role === "parent") {
                 router.push({ path: `/families` });
+            } else {
+                this.$emit("refresh-main");
             }
         },
     },

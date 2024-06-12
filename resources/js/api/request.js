@@ -3,7 +3,7 @@ import axios from "axios";
 export const getToken = async () => {
     try {
         await axios.get(
-            "https://e321-178-150-111-49.ngrok-free.app/sanctum/csrf-cookie"
+            "https://7f24-178-150-111-49.ngrok-free.app/sanctum/csrf-cookie"
         );
     } catch (error) {
         console.error(error);
@@ -59,5 +59,6 @@ function redirectToLogIn() {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userRoleId");
     localStorage.removeItem("groupId");
+    localStorage.removeItem("userProfilePhoto");
     router.push("/login");
 }

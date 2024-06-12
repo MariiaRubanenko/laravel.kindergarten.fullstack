@@ -71,11 +71,8 @@ export default {
             }
         },
         getImageSource() {
-            if (this.loading || !this.user.image_data || this.errored) {
-                return userDefaultImage;
-            } else {
-                return `data:image/png;base64,${this.user.image_data}`;
-            }
+            const image = localStorage.getItem("userProfilePhoto");
+            return image ? image : userDefaultImage;
         },
         redirectUserProfile() {
             router.push({ path: `/userProfile/${this.userId}` });

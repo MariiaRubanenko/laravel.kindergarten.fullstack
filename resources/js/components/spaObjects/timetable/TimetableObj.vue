@@ -6,7 +6,7 @@
         {{ message }}
     </div>
     <div class="timetable-container">
-        <InfoLoader :loading="loadingOfLessons" />
+        <InfoLoader :loading="loadingOfDays" />
         <div v-for="(day, index) in days" :key="index" class="column">
             <div class="day-header">{{ $t("timetable.days." + index) }}</div>
             <InfoBoxLoader class="pt-1" :loading="loading" />
@@ -58,7 +58,6 @@
 import { getCookies } from "@/api/request";
 
 import axios from "axios";
-import router from "@/router/router.js";
 
 import ConfirmationMenu from "@/components/Elements/ConfirmationMenu.vue";
 import InfoBoxLoader from "@/components/Elements/InfoBoxLoader.vue";
@@ -78,7 +77,7 @@ export default {
             lessonToDelete: "",
             showModal: false,
             loading: true,
-            loadingOfLessons: true,
+            loadingOfDays: true,
             errored: false,
             error: "",
         };
@@ -104,7 +103,7 @@ export default {
         },
         async fetchLessons() {
             try {
-                this.loadingOfLessons = false;
+                this.loadingOfDays = false;
                 const response = await axios.get(
                     `api/index_by_group_for_week/${this.groupId}`,
                     {
@@ -131,7 +130,7 @@ export default {
                     },
                 });
                 this.closeModal();
-                router.go();
+                this.$emit("refresh-main");
             } catch (error) {
                 console.error("Lesson delete error", error);
                 if (error.response.data.error) {
@@ -235,87 +234,3 @@ export default {
     }
 }
 </style>
-
-<!-- <style>
-.timetable-container {
-  display: flex;
-  background-color: var(--yellow-light-group);
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 1px solid var(--orange-border);
-}
-
-.column {
-  flex: 1;
-}
-
-.day-header {
-  text-align: center;
-  color: var(--light);
-  font-weight: bold;
-  border-radius: 5px;
-  margin: 1rem;
-  padding: 10px;
-  background-color: var(--green-light);
-}
-
-.lesson {
-  position: relative;
-  text-align: center;
-  background-color: var(--yellow-light-back);
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 1px solid var(--orange);
-  padding: 10px;
-  margin: 1rem;
-}
-
-.close-btn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: var(--red-main);
-  color: var(--light);
-  font-size: 17px;
-  font: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-@media (max-width: 576px) {
-  /* Очень маленькие экраны: каждый день недели отображается в один столбец */
-  .timetable-container {
-    flex-direction: column;
-  }
-}
-
-@media (min-width: 577px) and (max-width: 991px) {
-  /* Экраны среднего размера: 4 дня недели сверху, 3 снизу */
-  .timetable-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .column {
-    width: calc(50% - 1rem); /* Ширина столбца для средних экранов */
-    margin-bottom: 1rem;
-  }
-}
-
-@media (min-width: 992px) {
-  /* Крупные экраны: все 7 дней недели в одном ряду */
-  .timetable-container {
-    min-height: 90vh;
-  }
-
-  .column {
-    flex: 1;
-  }
-}
-</style>
- -->

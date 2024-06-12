@@ -108,7 +108,7 @@ export default {
                 this.loading = false;
             }
         },
-        async payBill() {
+        /*   async payBill() {
             try {
                 axios
                     .post(
@@ -139,6 +139,39 @@ export default {
                     this.error = error.response.data.error;
                 }
                 if (error.response.data.message) {
+                    this.messaged = true;
+                    this.message = error.response.data.message;
+                }
+            } finally {
+                this.loading = false;
+            }
+        }, */
+        async payBill() {
+            try {
+                const response = await axios.post(
+                    "/session",
+                    {
+                        id_payment: this.bill.id_payment,
+                        monthly_payment: this.bill.monthly_payment,
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-XSRF-Token": getCookies("XSRF-TOKEN"),
+                        },
+                    }
+                );
+
+                const paymentUrl = response.data.url;
+                window.open(paymentUrl, "_blank");
+                console.log(response);
+            } catch (error) {
+                console.error("Error while paying the bill", error);
+                if (error.response && error.response.data.error) {
+                    this.errored = true;
+                    this.error = error.response.data.error;
+                }
+                if (error.response && error.response.data.message) {
                     this.messaged = true;
                     this.message = error.response.data.message;
                 }

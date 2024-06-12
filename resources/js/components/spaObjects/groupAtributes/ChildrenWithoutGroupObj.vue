@@ -111,7 +111,7 @@ export default {
                         },
                     }
                 );
-                router.go();
+                this.$emit("refresh-main");
             } catch (error) {
                 this.errored = true;
                 this.error = this.$t("сhildrenWithoutGroup.addError");

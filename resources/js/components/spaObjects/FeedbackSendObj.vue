@@ -119,7 +119,7 @@ export default {
                     this.comment.text = "";
                     setTimeout(() => {
                         this.updating = false;
-                        router.go();
+                        this.$emit("refresh-main");
                     }, 6000);
                 } catch (error) {
                     console.error("Error sending comment:", error);

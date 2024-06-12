@@ -2,7 +2,8 @@
     <div class="spa">
         <NavigationObj />
         <main>
-            <HeaderObj /> <FamilyAccountProfileObj /> <TrustedPersonsObj />
+            <HeaderObj />
+            <FamilyAccountProfileObj /> <TrustedPersonsObj />
         </main>
     </div>
 </template>

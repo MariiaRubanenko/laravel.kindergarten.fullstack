@@ -1,11 +1,11 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <HeaderObj />
             <div class="row justify-content-center">
                 <div class="col-lg-7 mb-5">
-                    <StaffsOfGroupObj />
+                    <StaffsOfGroupObj @refresh-main="refreshMain" />
                 </div>
             </div>
         </main>
@@ -23,7 +23,14 @@ export default {
         HeaderObj,
         StaffsOfGroupObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 

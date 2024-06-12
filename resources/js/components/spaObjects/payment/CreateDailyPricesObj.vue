@@ -149,7 +149,7 @@ export default {
                         "Daily price created successfully:",
                         response.data
                     );
-                    router.go();
+                    this.$emit("refresh-main");
                 } catch (error) {
                     console.error("Error creating daily price:", error);
                     if (error.response.data.error) {

@@ -22,4 +22,13 @@ class Daily_priceResource extends JsonResource
             'month_text' => $this->name,
         ];
     }
+    public static function collection($resource)
+    {
+
+        $sorted = $resource->sortByDesc(function ($dailyPrice) {
+            return $dailyPrice->month_id;
+        });
+
+        return parent::collection($sorted);
+    }
 }

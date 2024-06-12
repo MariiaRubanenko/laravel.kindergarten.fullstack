@@ -148,13 +148,28 @@ export default {
                     } else if (userRoleName === "teacher") {
                         const userRoleId = response.data.data.staff_id[0];
                         localStorage.setItem("userRoleId", userRoleId);
-                        const groupId = await this.fetchStuff(userRoleId);
-                        localStorage.setItem("groupId", groupId);
+
+                        const staff = await this.fetchStuff(userRoleId);
+                        localStorage.setItem("groupId", staff.group_id);
+                        if (staff.image_data) {
+                            localStorage.setItem(
+                                "userProfilePhoto",
+                                `data:image/png;base64,${staff.image_data}`
+                            );
+                        }
                         this.redirectToGroup(groupId);
                     } else if (userRoleName === "parent") {
                         const userRoleId =
                             response.data.data.family_account_id[0];
                         localStorage.setItem("userRoleId", userRoleId);
+                        const parent = await this.fetchParent(userRoleId);
+                        if (parent.image_data) {
+                            localStorage.setItem(
+                                "userProfilePhoto",
+                                `data:image/png;base64,${parent.image_data}`
+                            );
+                        }
+
                         this.redirectToParent(userRoleId);
                     }
                 } catch (error) {
@@ -201,14 +216,34 @@ export default {
                 this.loading = false;
             }
         },
+        async fetchParent(parentId) {
+            try {
+                const response = await axios.get(
+                    `api/family_accounts/${parentId}`,
+                    {
+                        headers: {
+                            "X-XSRF-Token": getCookies("XSRF-TOKEN"),
+                        },
+                    }
+                );
+                console.log(response);
+                return response.data.data;
+            } catch (error) {
+                this.errored = true;
+                this.error = this.$t("parentProfile.dataLoadingError");
+                console.error(this.$t("parentProfile.dataLoadingError"), error);
+            } finally {
+                this.loading = false;
+            }
+        },
         redirectToGroups() {
             router.push({ path: `/groups` });
         },
         redirectToGroup(groupId) {
             router.push({ path: `/childrenOfGroupProfile/${groupId}` });
         },
-        redirectToParent(familyId) {
-            router.push({ path: `/payment/${familyId}` });
+        redirectToParent(parentId) {
+            router.push({ path: `/payment/${parentId}` });
         },
     },
 };

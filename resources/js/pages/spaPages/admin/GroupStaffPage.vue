@@ -1,16 +1,16 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <HeaderObj />
             <div class="d-lg-flex justify-content-center">
                 <div
                     class="col-lg-5 mb-5 mr-lg-5 mb-lg-0 mr-lg-3 fullscreen-container"
                 >
-                    <StaffsOfGroupObj />
+                    <StaffsOfGroupObj @refresh-main="refreshMain" />
                 </div>
                 <div class="col-lg-5 fullscreen-container">
-                    <StaffsWithoutGroupObj />
+                    <StaffsWithoutGroupObj @refresh-main="refreshMain" />
                 </div>
             </div>
         </main>
@@ -30,7 +30,14 @@ export default {
         StaffsOfGroupObj,
         StaffsWithoutGroupObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 

@@ -104,7 +104,7 @@ export default {
                         }
                     );
                     console.log("Group created successfully:", response.data);
-                    router.go();
+                    this.$emit("refresh-main");
                 } catch (error) {
                     console.error("Error creating group:", error);
                     console.error("Error creating group:", error);

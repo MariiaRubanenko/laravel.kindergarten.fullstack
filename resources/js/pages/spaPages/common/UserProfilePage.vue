@@ -1,7 +1,12 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main><UserProfileObj /></main>
+        <main :key="mainKey">
+            <UserProfileObj
+                @refresh-main="refreshMain"
+                :refresh-main="refreshMain"
+            />
+        </main>
     </div>
 </template>
 
@@ -14,7 +19,14 @@ export default {
         NavigationObj,
         UserProfileObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 

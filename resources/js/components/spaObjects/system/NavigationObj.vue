@@ -1,10 +1,9 @@
 <template>
     <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
-        <router-link to="/" class="logo" style="padding-left: 0">
+        <div class="logo" style="padding-left: 0">
             <img :src="logoURL" alt="logo" />
             <div v-if="is_expanded" class="logo-text">Happy Times</div>
-        </router-link>
-
+        </div>
         <div class="menu-toggle-wrap">
             <button class="menu-toggle" @click="ToggleMenu">
                 <span class="material-icons">keyboard_double_arrow_right</span>

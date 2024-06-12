@@ -4,7 +4,10 @@
         <main>
             <HeaderObj />
             <SwitchLanguageObj />
-            <PasswordChangingObj />
+            <PasswordChangingObj
+                :key="passwordChangingKey"
+                @refresh-password-changing="refreshPasswordChanging"
+            />
         </main>
     </div>
 </template>
@@ -22,7 +25,14 @@ export default {
         SwitchLanguageObj,
         PasswordChangingObj,
     },
-    data() {},
+    data() {
+        return { passwordChangingKey: 0 };
+    },
+    methods: {
+        refreshPasswordChanging() {
+            this.passwordChangingKey++;
+        },
+    },
 };
 </script>
 

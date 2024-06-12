@@ -1,16 +1,16 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <HeaderObj />
             <div class="d-lg-flex justify-content-center">
                 <div
                     class="col-lg-5 mb-5 mr-lg-5 mb-lg-0 mr-lg-3 fullscreen-container"
                 >
-                    <ChildrenOfGroupObj />
+                    <ChildrenOfGroupObj @refresh-main="refreshMain" />
                 </div>
                 <div class="col-lg-5 fullscreen-container">
-                    <ChildrenWithoutGroupObj />
+                    <ChildrenWithoutGroupObj @refresh-main="refreshMain" />
                 </div>
             </div>
         </main>
@@ -31,7 +31,12 @@ export default {
         ChildrenWithoutGroupObj,
     },
     data() {
-        return { groupId: this.$route.params.groupId };
+        return { mainKey: 0, groupId: this.$route.params.groupId };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
     },
 };
 </script>

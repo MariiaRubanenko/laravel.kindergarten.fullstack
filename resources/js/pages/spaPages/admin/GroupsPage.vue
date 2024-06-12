@@ -1,10 +1,10 @@
 <template>
     <div class="spa">
         <NavigationObj />
-        <main>
+        <main :key="mainKey">
             <HeaderObj />
-            <CreateGroupObj />
-            <GroupsObj />
+            <CreateGroupObj @refresh-main="refreshMain" />
+            <GroupsObj @refresh-main="refreshMain" />
         </main>
     </div>
 </template>
@@ -22,7 +22,14 @@ export default {
         CreateGroupObj,
         GroupsObj,
     },
-    data() {},
+    data() {
+        return { mainKey: 0 };
+    },
+    methods: {
+        refreshMain() {
+            this.mainKey++;
+        },
+    },
 };
 </script>
 
